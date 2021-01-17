@@ -84,7 +84,7 @@ def remove(connection):
 
 id = 0
 while True:  
-    global id 
+    #global id 
     """Accepts a connection request and stores two parameters,  
     conn which is a socket object for that user, and addr  
     which contains the IP address of the client that just  
@@ -100,8 +100,8 @@ while True:
   
     # creates and individual thread for every user  
     # that connects
-	id+=1
-	broadcast("joined:"+str(id), conn)  
+    id+=1
+    broadcast("joined:"+str(id), conn)  
     start_new_thread(clientthread,(conn,addr, id))    
   
 conn.close()  
