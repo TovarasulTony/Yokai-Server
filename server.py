@@ -50,7 +50,7 @@ def clientthread(conn, addr, id):
                     print ("<" + addr[0] + "> " + message)  
   
                     # Calls broadcast function to send message to all  
-                    message_to_send = "<" + addr[0] + "> " + message  
+                    message_to_send = message  
                     broadcast(message_to_send, conn)  
   
                 else:  
@@ -84,7 +84,7 @@ def remove(connection):
 
 id = 0
 while True:  
-  
+    global id 
     """Accepts a connection request and stores two parameters,  
     conn which is a socket object for that user, and addr  
     which contains the IP address of the client that just  
@@ -101,6 +101,7 @@ while True:
     # creates and individual thread for every user  
     # that connects
 	id+=1
+	broadcast("joined:"+str(id), conn)  
     start_new_thread(clientthread,(conn,addr, id))    
   
 conn.close()  
