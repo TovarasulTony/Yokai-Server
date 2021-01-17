@@ -36,8 +36,8 @@ list_of_clients = []
   
 def clientthread(conn, addr, id):  
   
-    # sends a message to the client whose user object is conn  
-    conn.send("id:"+str(id))  
+    # sends a message to the client whose user object is conn
+    conn.send(bytes("id:"+str(id), 'UTF-8'))
   
     while True:  
             try:  
