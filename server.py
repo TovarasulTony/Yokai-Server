@@ -39,23 +39,23 @@ def clientthread(conn, addr, id):
     info_str = ""
     if len(list_of_clients_info) != 0:
         info_str+=";"
-	info_str+=str(id)
-	info_str+=","
-	info_str+=str(10*id)
-	info_str+=","
-	info_str+="0"
-	info_str+=","
-	info_str+="0"
-	list_of_clients_info.append(info_str)
-	populate_list_str=""
-	for element in list_of_clients_info:
-	    if populate_list_str != "":
-		    populate_list_str+=";"
-	    populate_list_str+=element
+    info_str+=str(id)
+    info_str+=","
+    info_str+=str(10*id)
+    info_str+=","
+    info_str+="0"
+    info_str+=","
+    info_str+="0"
+    list_of_clients_info.append(info_str)
+    populate_list_str=""
+    for element in list_of_clients_info:
+        if populate_list_str != "":
+            populate_list_str+=";"
+        populate_list_str+=element
     # sends a message to the client whose user object is conn
     conn.send(bytes("id:"+str(id), 'UTF-8'))
     conn.send(bytes("populate_list:"+populate_list_str, 'UTF-8'))
-	message_to_send = "populate_list:"+populate_list_str
+    message_to_send = "populate_list:"+populate_list_str
     broadcast(message_to_send, conn)
   
     while True:  
