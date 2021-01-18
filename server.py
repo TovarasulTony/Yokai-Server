@@ -56,7 +56,11 @@ def clientthread(conn, addr, id):
     conn.send(bytes("id:"+str(id), 'UTF-8'))
     conn.send(bytes("populate_list:"+populate_list_str, 'UTF-8'))
     message_to_send = "populate_list:"+populate_list_str
+	print("1111")
+    broadcast("joined:"+str(id), conn)  
+	print("2222")
     broadcast(message_to_send, conn)
+	print("3333")
   
     while True:  
             try:  
@@ -134,7 +138,6 @@ while True:
     # creates and individual thread for every user  
     # that connects
     id+=1
-    broadcast("joined:"+str(id), conn)  
     start_new_thread(clientthread,(conn,addr, id))    
   
 conn.close()  
