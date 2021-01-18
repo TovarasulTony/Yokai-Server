@@ -108,9 +108,10 @@ def broadcast(message, connection):
 """The following function simply removes the object  
 from the list that was created at the beginning of  
 the program"""
-def remove(connection):  
-    if connection in list_of_clients:  
-        list_of_clients.remove(connection)  
+def remove(connection):
+    print("caca")  
+#    if connection in list_of_clients:  
+#        list_of_clients.remove(connection)  
 
 id = 0
 while True:  
