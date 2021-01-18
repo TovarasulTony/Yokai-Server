@@ -63,18 +63,17 @@ def clientthread(conn, addr, id):
                 message = conn.recv(2048)  
                 if message:  
                     message_split = message.split(":")
-					if message_split[0] == "moved":
-					    player_info = message_split[1].split(",")
-					    info_str=""
-					    info_str+=player_info[0]
-					    info_str+=","
-					    info_str+=player_info[1]
-					    info_str+=","
-					    info_str+=player_info[2]
-					    info_str+=","
-					    info_str+=player_info[3]
-						list_of_clients_info[int(player_info[0])-1] = info_str
-						
+                    if message_split[0] == "moved":
+                        player_info = message_split[1].split(",")
+                        info_str=""
+                        info_str+=player_info[0]
+                        info_str+=","
+                        info_str+=player_info[1]
+                        info_str+=","
+                        info_str+=player_info[2]
+                        info_str+=","
+                        info_str+=player_info[3]
+                        list_of_clients_info[int(player_info[0])-1] = info_str
                     """prints the message and address of the  
                     user who just sent the message on the server  
                     terminal"""
