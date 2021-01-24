@@ -66,7 +66,8 @@ def clientthread(conn, addr, id):
   
     while True:  
             try:  
-                message = conn.recv(2048)
+                bytes_message = conn.recv(2048)
+                message = bytes_message.decode("utf-8") 
                 print(message)
                 if message:  
                     message_split = message.split(":")
