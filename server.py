@@ -47,6 +47,7 @@ def clientthread(conn, addr, id):
     info_str+=","
     info_str+="0"
     list_of_clients_info.append(info_str)
+    print(info_str)
     populate_list_str=""
     for element in list_of_clients_info:
         if populate_list_str != "":
@@ -69,7 +70,7 @@ def clientthread(conn, addr, id):
                 if message:  
                     message_split = message.split(":")
                     if message_split[0] == "moved":
-                    	print(message)
+                        print(message)
                         player_info = message_split[1].split(",")
                         info_str=""
                         info_str+=player_info[0]
