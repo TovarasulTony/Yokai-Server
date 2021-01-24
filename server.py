@@ -56,15 +56,15 @@ def clientthread(conn, addr, id):
     conn.send(bytes("id:"+str(id), 'UTF-8'))
     conn.send(bytes("populate_list:"+populate_list_str, 'UTF-8'))
     message_to_send = "populate_list:"+populate_list_str
-    first_time = true
+    first_time = True
   
     while True:  
             try:  
                 message = conn.recv(2048)  
                 if message:  
                     message_split = message.split(":")
-                    if first_time == true:
-                        first_time=false
+                    if first_time == True:
+                        first_time=False
                         print("1111")
                         broadcast("joined:"+str(id), conn)  
                         print("2222")
