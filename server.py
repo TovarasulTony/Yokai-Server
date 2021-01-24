@@ -102,6 +102,7 @@ def clientthread(conn, addr, id):
 clients who's object is not the same as the one sending  
 the message """
 def broadcast(message, connection):  
+	print(len(list_of_clients))
     for clients in list_of_clients:  
         if clients!=connection:  
             try:  
