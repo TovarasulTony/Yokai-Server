@@ -106,7 +106,7 @@ def broadcast(message, connection):
     for clients in list_of_clients:  
         if clients!=connection:  
             try:  
-                clients.send(message)  
+                clients.send(bytes(message, 'UTF-8'))  
             except:  
                 clients.close()  
   
