@@ -66,7 +66,8 @@ def clientthread(conn, addr, id):
   
     while True:  
             try:  
-                message = conn.recv(2048)  
+                message = conn.recv(2048)
+                print(message)
                 if message:  
                     message_split = message.split(":")
                     if message_split[0] == "moved":
