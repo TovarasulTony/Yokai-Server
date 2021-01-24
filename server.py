@@ -67,7 +67,10 @@ def clientthread(conn, addr, id):
     while True:  
             try:  
                 bytes_message = conn.recv(2048)
-                message = bytes_message.decode("utf-8") 
+                message = bytes_message.decode("utf-8")
+                if message[0]=='[':
+                    message_bomb_list = message.split('[')
+                    message = message_bomb_list[len(message_bomb_list)-1]
                 print(message)
                 print(77777777777)
                 if message:  
