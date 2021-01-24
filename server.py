@@ -69,10 +69,12 @@ def clientthread(conn, addr, id):
                 bytes_message = conn.recv(2048)
                 message = bytes_message.decode("utf-8") 
                 print(message)
+                print(77777777777)
                 if message:  
                     message_split = message.split(":")
                     if message_split[0] == "moved":
                         print(message)
+                        print(88888888888)
                         player_info = message_split[1].split(",")
                         info_str=""
                         info_str+=player_info[0]
