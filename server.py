@@ -69,6 +69,7 @@ def clientthread(conn, addr, id):
                 if message:  
                     message_split = message.split(":")
                     if message_split[0] == "moved":
+                    	print(message)
                         player_info = message_split[1].split(",")
                         info_str=""
                         info_str+=player_info[0]
