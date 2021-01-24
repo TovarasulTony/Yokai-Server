@@ -52,6 +52,7 @@ def clientthread(conn, addr, id):
         if populate_list_str != "":
             populate_list_str+=";"
         populate_list_str+=element
+        print(element)
     # sends a message to the client whose user object is conn
     conn.send(bytes("id:"+str(id), 'UTF-8'))
     conn.send(bytes("populate_list:"+populate_list_str, 'UTF-8'))
