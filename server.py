@@ -36,7 +36,7 @@ list_of_clients = []
 list_of_clients_info = []
   
 def clientthread(conn, addr, id):
-	global list_of_clients_info
+    global list_of_clients_info
     info_str = ""
     if len(list_of_clients_info) != 0:
         info_str+=";"
