@@ -10,7 +10,7 @@ class PlayerHolder:
         else:
             self.player_list[id]=player   
         print (addr[0] + " connected")
-        start_new_thread(self.clientthread,(conn,addr, id))
+        start_new_thread(self.clientthread,(player,addr, id))
 
     def broadcast(self, message, connection):  
         print(len(list_of_clients))
