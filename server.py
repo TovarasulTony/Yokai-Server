@@ -1,8 +1,9 @@
 # Python program to implement server side of chat room.  
-import socket  
-import select  
-import sys  
+import socket
+import select
+import sys
 from _thread import *
+from player_holder import PlayerHolder
   
 """The first argument AF_INET is the address domain of the  
 socket. This is used when we have an Internet Domain with  
@@ -24,14 +25,14 @@ binds the server to an entered IP address and at the
 specified port number.  
 The client must be aware of these parameters  
 """
-server.bind((IP_address, Port))  
-  
-"""  
+server.bind((IP_address, Port))
+
+"""
 listens for 100 active connections. This number can be  
 increased as per convenience.  
 """
-server.listen(2)  
-  
+server.listen(2)
+
 list_of_clients = []  
 list_of_clients_info = []
   
@@ -132,6 +133,7 @@ def remove(connection):
         list_of_clients.remove(connection)
 
 id = 0
+holder = PlayerHolder()
 while True:
     #global id 
     """Accepts a connection request and stores two parameters,  
@@ -143,6 +145,7 @@ while True:
     """Maintains a list of clients for ease of broadcasting  
     a message to all available people in the chatroom"""
     list_of_clients.append(conn)
+    holder.add_player(conn)
   
     # prints the address of the user that just connected  
     print (addr[0] + " connected")
