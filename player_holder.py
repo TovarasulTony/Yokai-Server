@@ -3,6 +3,7 @@ from _thread import *
 class PlayerHolder:
     def __init__(self):
         self.player_list = []
+        self.player_info_list = []
 
     def add_player(self, player, addr, id):
         if len(self.player_list) <= id:
@@ -13,8 +14,8 @@ class PlayerHolder:
         start_new_thread(self.clientthread,(player,addr, id))
 
     def broadcast(self, message, connection):  
-        print(len(list_of_clients))
-        for clients in list_of_clients:  
+        print(len(self.player_list))
+        for clients in self.player_list:  
             if clients!=connection:  
                 try:  
                     clients.send(bytes(message, 'UTF-8'))  
@@ -26,13 +27,12 @@ class PlayerHolder:
                     self.remove(clients)
 
     def remove(self, connection):
-        if connection in list_of_clients:
-            list_of_clients.remove(connection)
+        if connection in self.player_list:
+            self.player_list.remove(connection)
 
     def clientthread(self, conn, addr, id):
-        global list_of_clients_info
         info_str = ""
-        if len(list_of_clients_info) != 0:
+        if len(self.player_info_list) != 0:
             info_str+=";"
         info_str+=str(id)
         info_str+=","
@@ -41,10 +41,10 @@ class PlayerHolder:
         info_str+="4"
         info_str+=","
         info_str+=str(30+10*id)
-        list_of_clients_info.append(info_str)
+        self.player_info_list.append(info_str)
         print(info_str)
         populate_list_str=""
-        for element in list_of_clients_info:
+        for element in self.player_info_list:
             if populate_list_str != "":
                 populate_list_str+=";"
             populate_list_str+=element
@@ -82,7 +82,7 @@ class PlayerHolder:
                         info_str+=player_info[2]
                         info_str+=","
                         info_str+=player_info[3]
-                        list_of_clients_info[int(player_info[0])-1] = info_str
+                        self.player_info_list[int(player_info[0])-1] = info_str
                     """prints the message and address of the  
                     user who just sent the message on the server  
                     terminal"""

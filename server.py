@@ -33,13 +33,10 @@ increased as per convenience.
 """
 server.listen(2)
 
-list_of_clients = []  
-list_of_clients_info = []
   
 def clientthread(conn, addr, id):
-    global list_of_clients_info
     info_str = ""
-    if len(list_of_clients_info) != 0:
+    if len(self.player_info_list) != 0:
         info_str+=";"
     info_str+=str(id)
     info_str+=","
@@ -48,10 +45,10 @@ def clientthread(conn, addr, id):
     info_str+="4"
     info_str+=","
     info_str+=str(30+10*id)
-    list_of_clients_info.append(info_str)
+    self.player_info_list.append(info_str)
     print(info_str)
     populate_list_str=""
-    for element in list_of_clients_info:
+    for element in self.player_info_list:
         if populate_list_str != "":
             populate_list_str+=";"
         populate_list_str+=element
@@ -89,7 +86,7 @@ def clientthread(conn, addr, id):
                         info_str+=player_info[2]
                         info_str+=","
                         info_str+=player_info[3]
-                        list_of_clients_info[int(player_info[0])-1] = info_str
+                        self.player_info_list[int(player_info[0])-1] = info_str
                     """prints the message and address of the  
                     user who just sent the message on the server  
                     terminal"""
@@ -113,8 +110,8 @@ def clientthread(conn, addr, id):
 clients who's object is not the same as the one sending  
 the message """
 def broadcast(message, connection):  
-    print(len(list_of_clients))
-    for clients in list_of_clients:  
+    print(len(self.player_list))
+    for clients in self.player_list:  
         if clients!=connection:  
             try:  
                 clients.send(bytes(message, 'UTF-8'))  
@@ -129,8 +126,8 @@ def broadcast(message, connection):
 from the list that was created at the beginning of  
 the program"""
 def remove(connection):
-    if connection in list_of_clients:
-        list_of_clients.remove(connection)
+    if connection in self.player_list:
+        self.player_list.remove(connection)
 
 id = -1
 holder = PlayerHolder()
@@ -144,7 +141,7 @@ while True:
   
     """Maintains a list of clients for ease of broadcasting  
     a message to all available people in the chatroom"""
-    #list_of_clients.append(conn)
+    #self.player_list.append(conn)
   
     # prints the address of the user that just connected  
   
