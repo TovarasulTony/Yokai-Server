@@ -3,7 +3,7 @@ class PlayerHolder:
         self.player_list = []
 
     def add_player(self, player, addr, id):
-        if len(player_list) <= id:
+        if len(self.player_list) <= id:
             self.player_list.append(player)
         else:
             self.player_list[id]=player   
