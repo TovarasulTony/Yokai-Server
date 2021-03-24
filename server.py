@@ -144,14 +144,14 @@ while True:
   
     """Maintains a list of clients for ease of broadcasting  
     a message to all available people in the chatroom"""
-    list_of_clients.append(conn)
+    #list_of_clients.append(conn)
   
     # prints the address of the user that just connected  
   
     # creates and individual thread for every user  
     # that connects
     id+=1
-    start_new_thread(clientthread,(conn,addr, id))
+    #start_new_thread(clientthread,(conn,addr, id))
     holder.add_player(conn, addr, id)
 
   
