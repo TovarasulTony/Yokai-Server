@@ -25,7 +25,7 @@ class Lobby:
         conn.send(bytes(json.dumps(lobby_info), 'UTF-8'))
 
     def clientthread(self, conn, addr, id):
-    	setup_lobby_player(conn)
+        setup_lobby_player(conn)
         while True:  
             try:  
                 bytes_message = conn.recv(2048)
