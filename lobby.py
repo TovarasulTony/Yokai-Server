@@ -18,10 +18,10 @@ class Lobby:
         start_new_thread(self.clientthread,(player,addr, id))
 
     def setup_lobby_player(self, conn):
-    	lobby_info = command
-    	lobby_info["command_type"] = "LOBBY"
-    	lobby_info["message"] = "lobby_count"
-    	lobby_info["values"] = len(lobby_list)
+        lobby_info = command
+        lobby_info["command_type"] = "LOBBY"
+        lobby_info["message"] = "lobby_count"
+        ["values"] = len(lobby_list)
         conn.send(bytes(json.dumps(lobby_info), 'UTF-8'))
 
     def clientthread(self, conn, addr, id):
