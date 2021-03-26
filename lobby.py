@@ -20,7 +20,7 @@ class Lobby:
         lobby_info = command
         lobby_info["command_type"] = "LOBBY"
         lobby_info["message"] = "lobby_count"
-        lobby_info["values"] = len(self.lobby_list)
+        lobby_info["values"] = str(len(self.lobby_list))
         conn.send(bytes(json.dumps(lobby_info), 'UTF-8'))
 
     def clientthread(self, conn, addr, id):
