@@ -19,6 +19,7 @@ lobby = Lobby()
 while True:
     conn, addr = server.accept()
     id+=1
+    lobby.add_potential_player(conn, addr, id)
     holder.add_player(conn, addr, id)
 conn.close()
 server.close()
