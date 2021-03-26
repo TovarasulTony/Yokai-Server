@@ -6,8 +6,6 @@ command = {
   "values": None
 }
 
-y = json.dumps(x)
-
 class Lobby:
     def __init__(self):
         self.lobby_list = []
