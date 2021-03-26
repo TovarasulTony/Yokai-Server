@@ -4,7 +4,7 @@ import json
 command = {
   "command_type": "INVALID",
   "message": "",
-  "values": None
+  "values": ""
 }
 
 class Lobby:
