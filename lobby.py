@@ -72,4 +72,4 @@ class Lobby:
 
     def execute_command(self, conn, message):
         if message["message"] == "enter_game":
-        	print("YEAH BOYY")
+            print("YEAH BOYY")
