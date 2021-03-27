@@ -29,12 +29,10 @@ class Lobby:
             try:  
                 bytes_message = conn.recv(2048)
                 message = bytes_message.decode("utf-8")
-                if message[0]=='[':
-                    message_bomb_list = message.split('[')
-                    message = message_bomb_list[len(message_bomb_list)-1]
-                print(message)
-                print(77777777777)
-                if message:  
+                message = json.loads(message)
+                if message:
+                	self.execute_command(conn, message)
+                	"""
                     message_split = message.split(":")
                     if message_split[0] == "moved":
                         print(message)
@@ -49,14 +47,18 @@ class Lobby:
                         info_str+=","
                         info_str+=player_info[3]
                         self.player_info_list[int(player_info[0])-1] = info_str
+                    """
                     """prints the message and address of the  
                     user who just sent the message on the server  
-                    terminal"""
+                    terminal
+                    """
+                    """
                     print ("<" + addr[0] + "> " + message)  
   
                     # Calls broadcast function to send message to all  
                     message_to_send = message  
-                    self.broadcast(message_to_send, conn)  
+                    self.broadcast(message_to_send, conn)
+                    """
   
                 else:  
                     """message may have no content if the connection  
@@ -67,3 +69,7 @@ class Lobby:
   
             except:  
                 continue
+
+    def execute_command(self, conn, message):
+        if message["message"] == "enter_game":
+        	print("YEAH BOYY")
