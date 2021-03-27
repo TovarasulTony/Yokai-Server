@@ -75,4 +75,5 @@ class Lobby:
     def execute_command(self, conn, message):
         if message["message"] == "enter_game":
             print("gjjj")
+            print(self.command_callback)
             self.command_callback(conn, message["message"])
