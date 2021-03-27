@@ -13,19 +13,19 @@ class ServerClass:
         self.Port = 65432
         self.server.bind((self.IP_address, self.Port))
         self.server.listen(2)
+        self.holder = PlayerHolder()
+        self.lobby = Lobby(self.command_handler)
 
     def command_handler(self, conn, command):
-        lobby.remove_potential_player(conn)
-        holder.add_player(conn, addr, id)
+        self.lobby.remove_potential_player(conn)
+        self.holder.add_player(conn, addr, id)
 
     def main_loop(self):
         id = -1
-        holder = PlayerHolder()
-        lobby = Lobby(self.command_handler)
         while True:
             conn, addr = self.server.accept()
             id+=1
-            lobby.add_potential_player(conn, addr, id)
+            self.lobby.add_potential_player(conn, addr, id)
             #holder.add_player(conn, addr, id)
         conn.close()
         self.server.close()
