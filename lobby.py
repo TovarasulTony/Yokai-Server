@@ -10,9 +10,11 @@ command = {
 class Lobby:
     def __init__(self):
         self.lobby_list = []
+        self.command_callback = None
 
-    def add_potential_player(self, player, addr, id):
+    def add_potential_player(self, player, addr, id, command_callback):
         self.lobby_list.append(player)  
+        self.command_callback = command_callback
         print (addr[0] + " connected")
         start_new_thread(self.clientthread,(player,addr, id))
 
@@ -72,4 +74,4 @@ class Lobby:
 
     def execute_command(self, conn, message):
         if message["message"] == "enter_game":
-            print("YEAH BOYY")
+            self.command_callback(conn, message["message"])
