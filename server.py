@@ -11,7 +11,7 @@ class ServerClass:
         self.server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.IP_address = "23.95.226.141" 
         self.Port = 65432
-        self.server.bind((IP_address, Port))
+        self.server.bind((self.IP_address, self.Port))
         self.server.listen(2)
 
     def main_loop(self):
@@ -19,12 +19,12 @@ class ServerClass:
         holder = PlayerHolder()
         lobby = Lobby()
         while True:
-            conn, addr = server.accept()
+            conn, addr = self.server.accept()
             id+=1
             lobby.add_potential_player(conn, addr, id, self.command_handler)
             #holder.add_player(conn, addr, id)
         conn.close()
-        server.close()
+        self.server.close()
 
     def command_handler(self, command):
         print("gasd")
