@@ -14,7 +14,7 @@ class ServerClass:
         self.server.bind((self.IP_address, self.Port))
         self.server.listen(2)
 
-    def command_handler(self, command):
+    def command_handler(self, conn, command):
         print("gasd")
 
     def main_loop(self):
