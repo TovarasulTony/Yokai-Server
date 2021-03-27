@@ -15,16 +15,17 @@ class ServerClass:
         self.server.listen(2)
 
     def command_handler(self, conn, command):
-        print("gasd")
+        lobby.remove_potential_player(conn)
+        holder.add_player(conn, addr, id)
 
     def main_loop(self):
         id = -1
         holder = PlayerHolder()
-        lobby = Lobby()
+        lobby = Lobby(self.command_handler)
         while True:
             conn, addr = self.server.accept()
             id+=1
-            lobby.add_potential_player(conn, addr, id, self.command_handler)
+            lobby.add_potential_player(conn, addr, id)
             #holder.add_player(conn, addr, id)
         conn.close()
         self.server.close()

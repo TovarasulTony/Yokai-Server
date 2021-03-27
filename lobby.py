@@ -8,15 +8,23 @@ command = {
 }
 
 class Lobby:
-    def __init__(self):
+    def __init__(self, command_callback):
         self.lobby_list = []
-        self.command_callback = None
+        self.command_callback = command_callback
 
-    def add_potential_player(self, player, addr, id, command_callback):
+    def add_potential_player(self, player, addr, id):
         self.lobby_list.append(player)  
         self.command_callback = command_callback
         print (addr[0] + " connected")
         start_new_thread(self.clientthread,(player,addr, id))
+
+    def remove_potential_player(self, player):
+        lobby_info = command
+        lobby_info["command_type"] = "LOBBY"
+        lobby_info["message"] = "load_next_lvl"
+        lobby_info["values"] = ""
+        conn.send(bytes(json.dumps(lobby_info), 'UTF-8'))
+        self.lobby_list.remove(player)
 
     def setup_lobby_player(self, conn):
         lobby_info = command
@@ -56,24 +64,22 @@ class Lobby:
                     """
                     """
                     print ("<" + addr[0] + "> " + message)  
-  
+
                     # Calls broadcast function to send message to all  
                     message_to_send = message  
                     self.broadcast(message_to_send, conn)
                     """
-  
+
                 else:  
                     """message may have no content if the connection  
                     is broken, in this case we remove the connection"""
                     print("cucu")  
                     print(message)  
                     self.remove(conn)  
-  
+
             except:  
                 continue
 
     def execute_command(self, conn, message):
         if message["message"] == "enter_game":
-            print("gjjj")
-            print(self.command_callback)
             self.command_callback(conn, message["message"])
