@@ -31,8 +31,8 @@ class Lobby:
                 message = bytes_message.decode("utf-8")
                 message = json.loads(message)
                 if message:
-                	self.execute_command(conn, message)
-                	"""
+                    self.execute_command(conn, message)
+                    """
                     message_split = message.split(":")
                     if message_split[0] == "moved":
                         print(message)
