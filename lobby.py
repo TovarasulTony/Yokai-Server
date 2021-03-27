@@ -12,7 +12,7 @@ class Lobby:
         self.lobby_list = []
         self.command_callback = command_callback
 
-    def add_potential_player(self, player, addr, id):
+    def add_potential_player(self, player, addr, id, command_callback):
         self.lobby_list.append(player)  
         self.command_callback = command_callback
         print (addr[0] + " connected")
