@@ -14,6 +14,9 @@ class ServerClass:
         self.server.bind((self.IP_address, self.Port))
         self.server.listen(2)
 
+    def command_handler(self, command):
+        print("gasd")
+
     def main_loop(self):
         id = -1
         holder = PlayerHolder()
@@ -25,9 +28,6 @@ class ServerClass:
             #holder.add_player(conn, addr, id)
         conn.close()
         self.server.close()
-
-    def command_handler(self, command):
-        print("gasd")
 
 
 server = ServerClass()
