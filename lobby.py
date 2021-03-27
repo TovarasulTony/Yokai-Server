@@ -18,6 +18,7 @@ class Lobby:
         start_new_thread(self.clientthread,(player,addr, id))
 
     def remove_potential_player(self, player):
+        print(5555)
         lobby_info = command
         lobby_info["command_type"] = "LOBBY"
         lobby_info["message"] = "load_next_lvl"
