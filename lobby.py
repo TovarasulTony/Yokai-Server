@@ -35,13 +35,21 @@ class Lobby:
 
     def clientthread(self, conn, addr, id):
         self.setup_lobby_player(conn)
+        terminate_thread_flag = False
         while True:  
-            try:  
+            try:
+                if terminate_thread_flag == True:
+                    return
                 bytes_message = conn.recv(2048)
-                message = bytes_message.decode("utf-8")
-                message = json.loads(message)
-                if message:
-                    self.execute_command(conn, message)
+                message_bulk = bytes_message.decode("utf-8")
+                message_list = message_bulk.split('$')
+                for message in message_list:
+                    print(88888)
+                    print(message)
+                    if message == "":
+                        continue
+                    message = json.loads(message)
+                    terminate_thread_flag = self.execute_command(conn, message)
                     """
                     message_split = message.split(":")
                     if message_split[0] == "moved":
@@ -70,12 +78,12 @@ class Lobby:
                     self.broadcast(message_to_send, conn)
                     """
 
-                else:  
+                #else:  
                     """message may have no content if the connection  
                     is broken, in this case we remove the connection"""
-                    print("cucu")  
-                    print(message)  
-                    self.remove(conn)  
+                    #print("cucu")  
+                    #print(message)  
+                    #self.remove(conn)  
 
             except:  
                 continue
