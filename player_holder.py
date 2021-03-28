@@ -33,6 +33,7 @@ class PlayerHolder:
         self.current_id_count = 0
 
     def add_player(self, conn, addr, id):
+        print("HOLDER")
         self.current_id_count += 1
         added_player = player_info
         added_player["id"] = self.current_id_count
