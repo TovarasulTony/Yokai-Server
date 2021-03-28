@@ -23,7 +23,7 @@ class Lobby:
         lobby_info["command_type"] = "LOBBY"
         lobby_info["message"] = "load_next_lvl"
         lobby_info["values"] = ""
-        player.send(bytes(json.dumps(lobby_info), 'UTF-8'))
+        #player.send(bytes(json.dumps(lobby_info), 'UTF-8'))
         self.lobby_list.remove(player)
 
     def setup_lobby_player(self, conn):
