@@ -32,7 +32,7 @@ class PlayerHolder:
         self.player_info_list = {}
         self.current_id_count = 0
 
-    def add_player(self, conn, addr):
+    def add_player(self, conn, addr="placeholder"):
         print("HOLDER")
         self.current_id_count += 1
         added_player = player_info
