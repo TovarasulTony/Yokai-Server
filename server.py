@@ -18,7 +18,9 @@ class ServerClass:
 
     def command_handler(self, conn, command):
         self.lobby.remove_potential_player(conn)
+        print("carbune1")
         self.holder.add_player(conn, addr)
+        print("carbune2")
 
     def main_loop(self):
         id = -1
