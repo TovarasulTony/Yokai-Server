@@ -109,7 +109,7 @@ class PlayerHolder:
         print("3333")
 
     def clientthread(self, conn, addr="placeholder"):
-    	self.setup_player(conn)
+        #self.setup_player(conn)
         info_str = ""
         if len(self.player_info_list) != 0:
             info_str+=";"
