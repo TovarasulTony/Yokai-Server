@@ -61,8 +61,9 @@ class Lobby:
                         """message may have no content if the connection  
                         is broken, in this case we remove the connection"""
                         #print("cucu")  
-                        print("MESAJ GOL")  
-                        self.remove(player["connection"])  
+                        print("MESAJ GOL")
+                        self.remove_potential_player(player["connection"])
+                        #self.remove(player["connection"])  
                         continue
                     message = json.loads(message)
                     terminate_thread_flag = self.execute_command(player["connection"], message)
