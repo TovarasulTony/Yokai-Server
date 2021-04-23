@@ -6,16 +6,25 @@ command = {
   "message": "",
   "values": ""
 }
+player_dict = {
+  "id": -1,
+  "connection": None,
+  "address": ""
+}
 
 class Lobby:
     def __init__(self, command_callback):
         self.lobby_list = []
         self.command_callback = command_callback
 
-    def add_potential_player(self, player, addr, id):
-        self.lobby_list.append(player)  
-        print (addr[0] + " connected")
-        start_new_thread(self.clientthread,(player,addr, id))
+    def add_potential_player(self, conn, addr, id):
+        new_player = player_dict
+        new_player["id"] = id
+        new_player["connection"] = conn
+        new_player["address"] = addr
+        self.lobby_list.append(new_player)  
+        print (new_player["address"] + " connected")
+        start_new_thread(self.clientthread,(new_player))
 
     def remove_potential_player(self, player):
         print(5555)
@@ -26,65 +35,37 @@ class Lobby:
         player.send(bytes(json.dumps(lobby_info), 'UTF-8'))
         self.lobby_list.remove(player)
 
-    def setup_lobby_player(self, conn):
+    def setup_lobby_player(self, player):
         lobby_info = command
         lobby_info["command_type"] = "LOBBY"
         lobby_info["message"] = "lobby_count"
         lobby_info["values"] = len(self.lobby_list)
-        conn.send(bytes(json.dumps(lobby_info), 'UTF-8'))
+        #this line should be a function call
+        player["connection"].send(bytes(json.dumps(lobby_info), 'UTF-8'))
 
-    def clientthread(self, conn, addr, id):
-        self.setup_lobby_player(conn)
+    def clientthread(self, player):
+        self.setup_lobby_player(player)
         terminate_thread_flag = False
         while True:  
             try:
                 if terminate_thread_flag == True:
+                	print("Lobby Thread terminated for address: " + player["address"])
                     return
-                bytes_message = conn.recv(2048)
+                bytes_message = player["connection"].recv(2048)
                 message_bulk = bytes_message.decode("utf-8")
                 message_list = message_bulk.split('$')
                 for message in message_list:
                     print(88888)
                     print(message)
                     if message == "":
+                        """message may have no content if the connection  
+                        is broken, in this case we remove the connection"""
+                        #print("cucu")  
+                        print("MESAJ GOL")  
+                        #self.remove(conn)  
                         continue
                     message = json.loads(message)
-                    terminate_thread_flag = self.execute_command(conn, message)
-                    """
-                    message_split = message.split(":")
-                    if message_split[0] == "moved":
-                        print(message)
-                        print(88888888888)
-                        player_info = message_split[1].split(",")
-                        info_str=""
-                        info_str+=player_info[0]
-                        info_str+=","
-                        info_str+=player_info[1]
-                        info_str+=","
-                        info_str+=player_info[2]
-                        info_str+=","
-                        info_str+=player_info[3]
-                        self.player_info_list[int(player_info[0])-1] = info_str
-                    """
-                    """prints the message and address of the  
-                    user who just sent the message on the server  
-                    terminal
-                    """
-                    """
-                    print ("<" + addr[0] + "> " + message)  
-
-                    # Calls broadcast function to send message to all  
-                    message_to_send = message  
-                    self.broadcast(message_to_send, conn)
-                    """
-
-                #else:  
-                    """message may have no content if the connection  
-                    is broken, in this case we remove the connection"""
-                    #print("cucu")  
-                    #print(message)  
-                    #self.remove(conn)  
-
+                    terminate_thread_flag = self.execute_command(player["connection"], message)
             except:  
                 continue
 
