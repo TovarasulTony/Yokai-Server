@@ -23,7 +23,7 @@ class Lobby:
         new_player["connection"] = conn
         new_player["address"] = addr
         self.lobby_list.append(new_player)  
-        print (new_player["address"] + " connected")
+        print(str(new_player["address"]) + " connected")
         start_new_thread(self.clientthread,(new_player))
 
     def remove_potential_player(self, player):
