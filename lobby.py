@@ -62,7 +62,8 @@ class Lobby:
                         is broken, in this case we remove the connection"""
                         #print("cucu")  
                         print("MESAJ GOL")
-                        self.remove_potential_player(player["connection"])
+                        player["connection"].close()
+                        #self.remove_potential_player(player["connection"])
                         #self.remove(player["connection"])  
                         continue
                     message = json.loads(message)
