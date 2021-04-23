@@ -16,10 +16,10 @@ class ServerClass:
         self.holder = PlayerHolder()
         self.lobby = Lobby(self.command_handler)
 
-    def command_handler(self, conn, command):
-        self.lobby.remove_potential_player(conn)
+    def command_handler(self, player, command):
+        self.lobby.remove_potential_player(player["connection"])
         print("carbune1")
-        self.holder.add_player(conn)
+        self.holder.add_player(player["connection"])
         print("carbune2")
 
     def main_loop(self):

@@ -66,10 +66,10 @@ class Lobby:
                         #self.remove(player["connection"])  
                         continue
                     message = json.loads(message)
-                    terminate_thread_flag = self.execute_command(player["connection"], message)
+                    terminate_thread_flag = self.execute_command(player, message)
             except:  
                 continue
 
-    def execute_command(self, conn, message):
+    def execute_command(self, player, message):
         if message["message"] == "enter_game":
-            self.command_callback(conn, message["message"])
+            self.command_callback(player, message["message"])
