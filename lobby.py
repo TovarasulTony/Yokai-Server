@@ -62,7 +62,7 @@ class Lobby:
                         is broken, in this case we remove the connection"""
                         #print("cucu")  
                         print("MESAJ GOL")  
-                        self.remove(conn)  
+                        self.remove(player["connection"])  
                         continue
                     message = json.loads(message)
                     terminate_thread_flag = self.execute_command(player["connection"], message)
