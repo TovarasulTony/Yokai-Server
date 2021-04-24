@@ -20,7 +20,7 @@ class ServerClass:
         print("command:")
         print(command)
         if command["message"] == "enter_game":
-            self.lobby.remove_potential_player(player["connection"])
+            self.lobby.remove_potential_player(lobby, player["connection"])
             print("carbune1")
             self.holder.add_player(player["connection"])     
             print("carbune2")
