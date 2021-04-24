@@ -65,7 +65,7 @@ class Lobby:
                         is broken, in this case we remove the connection"""
                         #print("cucu")  
                         print("MESAJ GOL")
-                        player["connection"].close()
+                        #player["connection"].close()
                         #self.remove_potential_player(player["connection"])
                         #self.remove(player["connection"])  
                         continue

@@ -19,10 +19,11 @@ class ServerClass:
     def command_handler(self, player, command):
         print("command:")
         print(command)
-        self.lobby.remove_potential_player(player["connection"])
-        print("carbune1")
-        self.holder.add_player(player["connection"])
-        print("carbune2")
+        if command["message"] == "enter_game":
+            self.lobby.remove_potential_player(player["connection"])
+            print("carbune1")
+            self.holder.add_player(player["connection"])     
+            print("carbune2")
 
     def main_loop(self):
         id = -1
