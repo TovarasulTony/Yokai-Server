@@ -32,7 +32,6 @@ class Lobby:
         lobby_info["command_type"] = "LOBBY"
         lobby_info["message"] = "load_next_lvl"
         lobby_info["values"] = ""
-        print(666)
         self.send_message_to_player(player, lobby_info)
         print(7777)
         self.lobby_list.remove(player)
@@ -46,7 +45,7 @@ class Lobby:
         self.send_message_to_player(player, lobby_info)
 
     def send_message_to_player(self, player, message_json):
-        player["connection"].send(bytes(json.dumps(message_json), 'UTF-8'))
+        print(player["connection"].send(bytes(json.dumps(message_json), 'UTF-8')))
 
     def clientthread(self, player):
         self.setup_lobby_player(player)
