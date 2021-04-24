@@ -33,6 +33,7 @@ class Lobby:
         lobby_info["message"] = "load_next_lvl"
         lobby_info["values"] = ""
         self.send_message_to_player(player, lobby_info)
+        print(7777)
         self.lobby_list.remove(player)
 
     def setup_lobby_player(self, player):
@@ -70,7 +71,6 @@ class Lobby:
                         #self.remove(player["connection"])  
                         continue
                     message = json.loads(message)
-                    print("terminate_thread_flag: " + str(terminate_thread_flag))
                     terminate_thread_flag = self.execute_command(player, message)
                     print("terminate_thread_flag: " + str(terminate_thread_flag))
             except:  
