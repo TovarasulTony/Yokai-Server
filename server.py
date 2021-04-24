@@ -17,6 +17,8 @@ class ServerClass:
         self.lobby = Lobby(self.command_handler)
 
     def command_handler(self, player, command):
+        print("command:")
+        print(command)
         self.lobby.remove_potential_player(player["connection"])
         print("carbune1")
         self.holder.add_player(player["connection"])
