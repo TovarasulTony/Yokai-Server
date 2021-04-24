@@ -45,6 +45,7 @@ class Lobby:
         self.send_message_to_player(player, lobby_info)
 
     def send_message_to_player(self, player, message_json):
+        print(player["connection"])
         print(player["connection"].send(bytes(json.dumps(message_json), 'UTF-8')))
 
     def clientthread(self, player):
