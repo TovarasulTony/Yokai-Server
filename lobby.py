@@ -32,6 +32,7 @@ class Lobby:
         lobby_info["command_type"] = "LOBBY"
         lobby_info["message"] = "load_next_lvl"
         lobby_info["values"] = ""
+        print(666)
         self.send_message_to_player(player, lobby_info)
         print(7777)
         self.lobby_list.remove(player)
