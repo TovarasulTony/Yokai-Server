@@ -70,6 +70,7 @@ class Lobby:
                         #self.remove(player["connection"])  
                         continue
                     message = json.loads(message)
+                    print("terminate_thread_flag: " + str(terminate_thread_flag))
                     terminate_thread_flag = self.execute_command(player, message)
                     print("terminate_thread_flag: " + str(terminate_thread_flag))
             except:  
