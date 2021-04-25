@@ -30,10 +30,14 @@ class PlayerHolder:
         added_player["id"] = player["id"]
         added_player["connection"] = player["connection"]
         added_player["address"] = player["address"]
+        print(111111)
         self.player_list[added_player["id"]] = added_player
         self.send_primordial_id(added_player)
+        print(222222)
         self.set_player_primary_position(added_player)
+        print(333333)
         self.send_init_info(added_player)
+        print(444444)
         #-----------ok code line#-----------
 
         start_new_thread(self.clientthread,(player,addr, id))
