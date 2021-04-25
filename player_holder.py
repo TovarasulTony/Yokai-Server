@@ -26,6 +26,7 @@ class PlayerHolder:
         self.player_info_list = {}
 
     def add_player(self, player):
+    	print("hey???")
         added_player = player_info
         added_player["id"] = player["id"]
         added_player["connection"] = player["connection"]
