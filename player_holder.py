@@ -56,7 +56,7 @@ class PlayerHolder:
         self.player_list.append(new_player)  
         print(str(new_player["address"]) + " connected")
         send_primordial_id(added_player)
-        send_init_info(...)
+        #send_init_info(...)
         start_new_thread(self.clientthread, (new_player,))
 
     def send_primordial_id(self, player):
@@ -66,8 +66,8 @@ class PlayerHolder:
         player_id_json["values"] = player["id"]
         self.send_message_to_player(player, player_id_json)
 
-    def send_init_info(self, player...):
-        send...
+    #def send_init_info(self, player...):
+    #    send...
 
     def broadcast(self, message, connection):  
         print(len(self.player_list))
