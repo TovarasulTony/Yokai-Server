@@ -7,40 +7,31 @@ command = {
   "values": ""
 }
 
-command = {
-  "command_type": "INVALID",
-  "message": "",
-  "values": ""
+player_position = {
+  "x": None,
+  "y": None,
+  "z": None
 }
 
 player_info = {
   "id": -1,
   "connection": None,
-  "address": ""
-}
-
-player_position = {
-  "id": None,
-  "x": None,
-  "y": None,
-  "z": None
+  "address": "",
+  "player_position": player_position
 }
 
 class PlayerHolder:
     def __init__(self):
         self.player_list = []
         self.player_info_list = {}
-        self.current_id_count = 0
 
-    def add_player(self, conn, addr="placeholder"):
-        print("HOLDER")
-        self.current_id_count += 1
+    def add_player(self, player):
         added_player = player_info
-        added_player["id"] = self.current_id_count
-        added_player["connection"] = conn
-        added_player["address"] = addr
+        added_player["id"] = player["id"]
+        added_player["connection"] = player["connection"]
+        added_player["address"] = player["address"]
+
         self.player_info_list[added_player["id"]] = added_player
-        print (addr[0] + " connected")
         player_command = command
         player_command["command_type"] = "GAME"
         player_command["message"] = "set_id"
@@ -61,6 +52,22 @@ class PlayerHolder:
         added_player["connection"].send(bytes(json.dumps(player_command), 'UTF-8'))
 
         start_new_thread(self.clientthread,(player,addr, id))
+        
+        self.player_list.append(new_player)  
+        print(str(new_player["address"]) + " connected")
+        send_primordial_id(added_player)
+        send_init_info(...)
+        start_new_thread(self.clientthread, (new_player,))
+
+    def send_primordial_id(self, player):
+        player_id_json = command
+        player_id_json["command_type"] = "LEVEL"
+        player_id_json["message"] = "set_primordial_id"
+        player_id_json["values"] = player["id"]
+        self.send_message_to_player(player, player_id_json)
+
+    def send_init_info(self, player...):
+        send...
 
     def broadcast(self, message, connection):  
         print(len(self.player_list))
@@ -181,3 +188,7 @@ class PlayerHolder:
   
             except:  
                 continue
+
+    def send_message_to_player(self, player, message_json):
+        print(player["connection"])
+        print(player["connection"].send(bytes(json.dumps(message_json), 'UTF-8')))

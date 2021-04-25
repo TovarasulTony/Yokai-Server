@@ -6,6 +6,7 @@ command = {
   "message": "",
   "values": ""
 }
+
 player_dict = {
   "id": -1,
   "connection": None,
@@ -16,10 +17,12 @@ class Lobby:
     def __init__(self, command_callback):
         self.lobby_list = []
         self.command_callback = command_callback
+        self.id_count = -1
 
-    def add_potential_player(self, conn, addr, id):
+    def add_potential_player(self, conn, addr):
+    	self.id_count+=1
         new_player = player_dict
-        new_player["id"] = id
+        new_player["id"] = self.id_count
         new_player["connection"] = conn
         new_player["address"] = addr
         self.lobby_list.append(new_player)  
@@ -27,13 +30,13 @@ class Lobby:
         start_new_thread(self.clientthread, (new_player,))
 
     def remove_potential_player(self, player):
-        print(5555)
+        '''
         lobby_info = command
         lobby_info["command_type"] = "LOBBY"
         lobby_info["message"] = "load_next_lvl"
         lobby_info["values"] = ""
         self.send_message_to_player(player, lobby_info)
-        print(7777)
+        '''
         self.lobby_list.remove(player)
 
     def setup_lobby_player(self, player):

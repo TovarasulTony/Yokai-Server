@@ -26,11 +26,9 @@ class ServerClass:
             print("carbune2")
 
     def main_loop(self):
-        id = -1
         while True:
             conn, addr = self.server.accept()
-            id+=1
-            self.lobby.add_potential_player(conn, addr, id)
+            self.lobby.add_potential_player(conn, addr)
             #holder.add_player(conn, addr, id)
         conn.close()
         self.server.close()
