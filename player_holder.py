@@ -30,6 +30,7 @@ class PlayerHolder:
         added_player["id"] = player["id"]
         added_player["connection"] = player["connection"]
         added_player["address"] = player["address"]
+        send_primordial_id(added_player)
 
         self.player_info_list[added_player["id"]] = added_player
         player_command = command
@@ -55,7 +56,6 @@ class PlayerHolder:
         
         self.player_list.append(new_player)  
         print(str(new_player["address"]) + " connected")
-        send_primordial_id(added_player)
         #send_init_info(...)
         start_new_thread(self.clientthread, (new_player,))
 
