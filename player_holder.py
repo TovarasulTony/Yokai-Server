@@ -23,34 +23,18 @@ player_info = {
 class PlayerHolder:
     def __init__(self):
         self.player_list = []
-        self.player_info_list = {}
+        #self.player_info_list = {}
 
     def add_player(self, player):
         added_player = player_info
         added_player["id"] = player["id"]
         added_player["connection"] = player["connection"]
         added_player["address"] = player["address"]
+        self.player_list[added_player["id"]] = added_player
         self.send_primordial_id(added_player)
-
-        self.player_info_list[added_player["id"]] = added_player
-        player_command = command
-        player_command["command_type"] = "GAME"
-        player_command["message"] = "set_id"
-        player_command["values"] = added_player["id"]
-        added_player["connection"].send(bytes(json.dumps(player_command), 'UTF-8'))
-
-        position_command = player_position
-        position_command["x"] = added_player["id"]
-        position_command["x"] = 150
-        position_command["y"] = 4
-        position_command["z"] = 30+10*added_player["id"]
-
-
-        player_command = command
-        player_command["command_type"] = "GAME"
-        player_command["message"] = "set_position"
-        player_command["values"] = position_command
-        added_player["connection"].send(bytes(json.dumps(player_command), 'UTF-8'))
+        self.set_player_primary_position(added_player)
+        self.send_init_info(added_player)
+        #-----------ok code line#-----------
 
         start_new_thread(self.clientthread,(player,addr, id))
         
@@ -59,13 +43,38 @@ class PlayerHolder:
         #send_init_info(...)
         start_new_thread(self.clientthread, (new_player,))
 
+    def set_player_primary_position(self, player):
+        added_player_position = player_position
+        added_player_position["x"] = 150
+        added_player_position["y"] = 4
+        added_player_position["z"] = 30 + 10 * player["id"]
+        player["player_position"] = added_player_position
+
     def send_primordial_id(self, player):
         player_id_json = command
         player_id_json["command_type"] = "LEVEL"
         player_id_json["message"] = "set_primordial_id"
         player_id_json["values"] = player["id"]
         self.send_message_to_player(player, player_id_json)
-        print("hihaho")
+
+    def send_init_info(self, player):
+        players_info_list = []
+        for player_info in self.player_list:
+            if player_info == None || player_info["id"] == None:
+                continue
+            player_info_json = {
+              "id": player_info["id"],
+              "x": player_info["player_position"]["x"],
+              "y": player_info["player_position"]["y"],
+              "z": player_info["player_position"]["z"]
+            }
+            player_json = command
+            player_json["command_type"] = "LEVEL"
+            player_json["message"] = "set_primary_position"
+            player_json["values"] = json.dumps(player_info_json)
+            self.send_message_to_player(player, player_json)
+
+
 
     #def send_init_info(self, player...):
     #    send...
