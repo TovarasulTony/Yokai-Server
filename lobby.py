@@ -20,7 +20,7 @@ class Lobby:
         self.id_count = -1
 
     def add_potential_player(self, conn, addr):
-    	self.id_count+=1
+        self.id_count+=1
         new_player = player_dict
         new_player["id"] = self.id_count
         new_player["connection"] = conn
