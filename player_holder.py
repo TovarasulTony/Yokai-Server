@@ -26,12 +26,11 @@ class PlayerHolder:
         self.player_info_list = {}
 
     def add_player(self, player):
-        print("hey???")
         added_player = player_info
         added_player["id"] = player["id"]
         added_player["connection"] = player["connection"]
         added_player["address"] = player["address"]
-        send_primordial_id(added_player)
+        self.send_primordial_id(added_player)
 
         self.player_info_list[added_player["id"]] = added_player
         player_command = command
