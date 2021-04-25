@@ -76,7 +76,6 @@ class Lobby:
                         continue
                     message = json.loads(message)
                     terminate_thread_flag = self.execute_command(player, message)
-                    print("terminate_thread_flag: " + str(terminate_thread_flag))
             except:  
                 continue
 
