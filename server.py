@@ -22,7 +22,7 @@ class ServerClass:
         if command["message"] == "enter_game":
             self.lobby.remove_potential_player(player)
             print("carbune1")
-            self.holder.add_player(player["connection"])     
+            self.holder.add_player(player)     
             print("carbune2")
 
     def main_loop(self):
