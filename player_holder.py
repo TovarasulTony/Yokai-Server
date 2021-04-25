@@ -60,7 +60,7 @@ class PlayerHolder:
     def send_init_info(self, player):
         players_info_list = []
         for player_info in self.player_list:
-            if player_info == None || player_info["id"] == None:
+            if player_info == None or player_info["id"] == None:
                 continue
             player_info_json = {
               "id": player_info["id"],
