@@ -65,6 +65,7 @@ class PlayerHolder:
         player_id_json["message"] = "set_primordial_id"
         player_id_json["values"] = player["id"]
         self.send_message_to_player(player, player_id_json)
+        print("hihaho")
 
     #def send_init_info(self, player...):
     #    send...
