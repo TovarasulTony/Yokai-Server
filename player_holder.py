@@ -72,11 +72,12 @@ class PlayerHolder:
               "y": player_info["player_position"]["y"],
               "z": player_info["player_position"]["z"]
             }
-            player_json = command
-            player_json["command_type"] = "LEVEL"
-            player_json["message"] = "set_primary_position"
-            player_json["values"] = json.dumps(player_info_json)
-            self.send_message_to_player(player, player_json)
+            players_info_list.append(player_info_json)
+        player_json = command
+        player_json["command_type"] = "LEVEL"
+        player_json["message"] = "set_primary_position"
+        player_json["values"] = json.dumps(players_info_list)
+        self.send_message_to_player(player, player_json)
 
 
 
