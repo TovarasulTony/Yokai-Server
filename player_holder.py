@@ -36,7 +36,7 @@ class PlayerHolder:
         self.set_player_primary_position(added_player)
         self.send_init_info(added_player)
         self.player_list.append(added_player)
-        start_new_thread(self.clientthread, (new_player,))
+        start_new_thread(self.clientthread, (added_player,))
         print("rege")
 
     def set_player_primary_position(self, player):
