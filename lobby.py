@@ -84,6 +84,7 @@ class Lobby:
     def execute_command(self, player, message):
         if message["message"] == "enter_game":
             self.command_callback(player, message)
+            print("HEGGEGEW")
             return True
         else:
             return False
