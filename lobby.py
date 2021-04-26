@@ -61,9 +61,6 @@ class Lobby:
                 message_bulk = bytes_message.decode("utf-8")
                 message_list = message_bulk.split('$')
                 for message in message_list:
-                    if terminate_thread_flag == True:
-                        print("Lobby Thread terminated for address: " + player["address"])
-                        return
                     #print(88888)
                     #print(message)
                     if message == "":
@@ -78,6 +75,9 @@ class Lobby:
                     message = json.loads(message)
                     terminate_thread_flag = self.execute_command(player, message)
                     print(terminate_thread_flag)
+                    if terminate_thread_flag == True:
+                        print("Lobby Thread terminated for address: " + player["address"])
+                        return
             except:  
                 continue
 
@@ -85,4 +85,5 @@ class Lobby:
         if message["message"] == "enter_game":
             self.command_callback(player, message)
             return True
-        return True
+        else:
+            return False
