@@ -78,7 +78,9 @@ class Lobby:
                     if terminate_thread_flag == True:
                         print("Lobby Thread terminated for address: " + player["address"])
                         return
-            except:  
+            except:
+                if terminate_thread_flag == True:
+                    return
                 continue
 
     def execute_command(self, player, message):
