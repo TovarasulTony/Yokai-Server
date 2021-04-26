@@ -37,7 +37,6 @@ class PlayerHolder:
         self.send_init_info(added_player)
         self.player_list.append(added_player)
         start_new_thread(self.clientthread, (added_player,))
-        print("rege")
 
     def set_player_primary_position(self, player):
         added_player_position = copy.deepcopy(player_position_dict)
