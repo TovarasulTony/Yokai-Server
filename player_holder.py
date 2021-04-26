@@ -27,10 +27,11 @@ class PlayerHolder:
 
     def add_player(self, player):
         added_player = player_info
+        print(111111)
         added_player["id"] = player["id"]
+        print(player["id"])
         added_player["connection"] = player["connection"]
         added_player["address"] = player["address"]
-        print(111111)
         self.player_list.insert(added_player["id"], added_player)
         self.send_primordial_id(added_player)
         print(222222)
