@@ -64,19 +64,20 @@ class Lobby:
                 message_bulk = bytes_message.decode("utf-8")
                 message_list = message_bulk.split('$')
                 for message in message_list:
-                    print(88888)
-                    print(message)
+                    #print(88888)
+                    #print(message)
                     if message == "":
                         """message may have no content if the connection  
                         is broken, in this case we remove the connection"""
                         #print("cucu")  
-                        print("MESAJ GOL")
+                        #print("MESAJ GOL")
                         #player["connection"].close()
                         #self.remove_potential_player(player["connection"])
                         #self.remove(player["connection"])  
                         continue
                     message = json.loads(message)
                     terminate_thread_flag = self.execute_command(player, message)
+                    print(terminate_thread_flag)
             except:  
                 continue
 
