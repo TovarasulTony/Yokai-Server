@@ -102,6 +102,7 @@ class PlayerHolder:
                 continue
 
     def execute_command(self, player, message):
+        print(666677777)
         if message["message"] == "player_moved":
             print(55555555555)
             print(message["values"])
