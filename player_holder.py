@@ -105,7 +105,8 @@ class PlayerHolder:
         if message["message"] == "player_moved":
             print(55555555555)
             #print(message["values"])
-            print(message["values"]["x"])
+            print(message["values"])
+            print(type(message["values"]))
             player_new_position = json.loads(message["values"])
             print(player_new_position)
             print(type(player_new_position['id']))
