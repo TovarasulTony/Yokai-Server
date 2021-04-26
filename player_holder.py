@@ -18,7 +18,7 @@ player_info_dict = {
   "id": -1,
   "connection": None,
   "address": "",
-  "player_position": player_position
+  "player_position": copy.deepcopy(player_position_dict)
 }
 
 class PlayerHolder:
