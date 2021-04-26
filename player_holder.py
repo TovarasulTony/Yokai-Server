@@ -31,17 +31,10 @@ class PlayerHolder:
         added_player["id"] = player["id"]
         added_player["connection"] = player["connection"]
         added_player["address"] = player["address"]
-        print(765736737)
-        print(player["id"])
-        print(added_player["id"])
-        added_player["id"] =7000
-        print(player["id"])
-        print(765736737)
         self.player_list.insert(added_player["id"], added_player)
         self.send_primordial_id(added_player)
         self.set_player_primary_position(added_player)
         self.send_init_info(added_player)
-        #-----------ok code line#-----------
         self.player_list.append(added_player)  
         start_new_thread(self.clientthread, (new_player,))
 
@@ -82,77 +75,40 @@ class PlayerHolder:
             self.player_list.remove(connection)
 
     def clientthread(self, player):
-        #self.setup_player(conn)
-        info_str = ""
-        if len(self.player_info_list) != 0:
-            info_str+=";"
-        info_str+=str(id)
-        info_str+=","
-        info_str+="150"
-        info_str+=","
-        info_str+="4"
-        info_str+=","
-        info_str+=str(30+10*id)
-        self.player_info_list.append(info_str)
-        print(info_str)
-        populate_list_str=""
-        for element in self.player_info_list:
-            if populate_list_str != "":
-                populate_list_str+=";"
-            populate_list_str+=element
-            print(element)
-        # sends a message to the client whose user object is conn
-        conn.send(bytes("id:"+str(id), 'UTF-8'))
-        conn.send(bytes("populate_list:"+populate_list_str, 'UTF-8'))
-        message_to_send = "populate_list:"+populate_list_str
-        print("1111")
-        self.broadcast("joined:"+str(id), conn)  
-        print("2222")
-        self.broadcast(message_to_send, conn)
-        print("3333")
-  
-        while True:  
-            try:  
-                bytes_message = conn.recv(2048)
-                message = bytes_message.decode("utf-8")
-                if message[0]=='[':
-                    message_bomb_list = message.split('[')
-                    message = message_bomb_list[len(message_bomb_list)-1]
-                print(message)
-                print(77777777777)
-                if message:  
-                    message_split = message.split(":")
-                    if message_split[0] == "moved":
-                        print(message)
-                        print(88888888888)
-                        player_info = message_split[1].split(",")
-                        info_str=""
-                        info_str+=player_info[0]
-                        info_str+=","
-                        info_str+=player_info[1]
-                        info_str+=","
-                        info_str+=player_info[2]
-                        info_str+=","
-                        info_str+=player_info[3]
-                        self.player_info_list[int(player_info[0])-1] = info_str
-                    """prints the message and address of the  
-                    user who just sent the message on the server  
-                    terminal"""
-                    print ("<" + addr[0] + "> " + message)  
-  
-                    # Calls broadcast function to send message to all  
-                    message_to_send = message  
-                    self.broadcast(message_to_send, conn)  
-  
-                else:  
-                    """message may have no content if the connection  
-                    is broken, in this case we remove the connection"""
-                    print("cucu")  
-                    print(message)  
-                    self.remove(conn)  
-  
+        terminate_thread_flag = False
+        while True:
+            try:
+                if terminate_thread_flag == True:
+                    print("Lobby Thread terminated for address: " + player["address"])
+                    return
+                bytes_message = player["connection"].recv(2048)
+                message_bulk = bytes_message.decode("utf-8")
+                message_list = message_bulk.split('$')
+                for message in message_list:
+                    print(88888)
+                    print(message)
+                    if message == "":
+                        """message may have no content if the connection  
+                        is broken, in this case we remove the connection"""
+                        #print("cucu")  
+                        print("MESAJ GOL")
+                        #player["connection"].close()
+                        #self.remove_potential_player(player["connection"])
+                        #self.remove(player["connection"])  
+                        continue
+                    message = json.loads(message)
+                    terminate_thread_flag = self.execute_command(player, message)
             except:  
                 continue
+
+    def execute_command(self, player, message):
+        if message["message"] == "player_moved":
+        	print(55555555555)
+        	print(message["values"])
+        	print(message["values"]["x"])
+            #json.loads(message["values"])
+            return False
+        return False
 
     def send_message_to_player(self, player, message_json):
         print(player["connection"])

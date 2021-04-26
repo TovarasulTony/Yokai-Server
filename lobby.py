@@ -26,7 +26,8 @@ class Lobby:
         new_player["id"] = self.id_count
         new_player["connection"] = conn
         new_player["address"] = addr
-        self.lobby_list.append(new_player)  
+        self.lobby_list.append(new_player) 
+        self.setup_lobby_player(player) 
         print(str(new_player["address"]) + " connected")
         start_new_thread(self.clientthread, (new_player,))
 
@@ -53,7 +54,6 @@ class Lobby:
         print(player["connection"].send(bytes(json.dumps(message_json), 'UTF-8')))
 
     def clientthread(self, player):
-        self.setup_lobby_player(player)
         terminate_thread_flag = False
         while True:  
             try:
