@@ -101,19 +101,61 @@ class PlayerHolder:
                 continue
 
     def execute_command(self, player, message):
-        print(666677777)
         if message["message"] == "player_moved":
-            print(55555555555)
-            #print(message["values"])
-            print(message["values"])
-            print(type(message["values"]))
             player_new_position = json.loads(message["values"])
-            print(player_new_position)
-            print(player_new_position['x'])
-            print(type(player_new_position['x']))
-            #player_list[player_new_position['id']]
+            new_position = copy.deepcopy(player_position_dict)
+            new_position["x"] = player_new_position["x"]
+            new_position["y"] = player_new_position["y"]
+            new_position["z"] = player_new_position["z"]
+            #de mutat intr-o functie???
+            player_list[player_new_position['id']]["player_position"]=new_position
+            #--------------------
+            '''
+
+            message_for_clients = copy.deepcopy(command_dict)
+            player_id_json["command_type"] = "LEVEL"
+            player_id_json["message"] = "update_players_positions"
+            player_id_json["values"] = player["id"]
+            self.send_message_to_player(player, player_id_json)
+            '''
+            #--------------------
+
+
+
+            players_info_list = []
+            for player_info in self.player_list:
+                if player_info == None or player_info["id"] == None:
+                    continue
+                player_info_json = {
+                  "id": player_info["id"],
+                  "x": player_info["player_position"]["x"],
+                  "y": player_info["player_position"]["y"],
+                  "z": player_info["player_position"]["z"]
+                }
+                players_info_list.append(player_info_json)
+            player_json = copy.deepcopy(command_dict)
+            player_json["command_type"] = "LEVEL"
+            player_json["message"] = "update_players_positions"
+            player_json["values"] = json.dumps(players_info_list)
+            self.broadcast(player, player_json)
             return False
         return False
+
+    def broadcast(self, player, message):
+        for player_in_list in self.player_list:
+            if player_in_list["id"] == player["id"]:
+                continue
+            self.send_message_to_player(player_in_list, message)
+            '''
+            if clients!=connection:  
+                try:  
+                    clients.send(bytes(message, 'UTF-8'))
+                except:  
+                    clients.close()  
+
+                    # if the link is broken, we remove the client  
+                    print("caca")  
+                    self.remove(clients)'''
 
     def send_message_to_player(self, player, message_json):
         print(player["connection"])
