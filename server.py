@@ -21,9 +21,7 @@ class ServerClass:
         print(command)
         if command["message"] == "enter_game":
             self.lobby.remove_potential_player(player)
-            print("carbune1")
-            self.holder.add_player(player)     
-            print("carbune2")
+            self.holder.add_player(player)
 
     def main_loop(self):
         while True:
