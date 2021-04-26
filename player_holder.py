@@ -76,6 +76,7 @@ class PlayerHolder:
 
     def clientthread(self, player):
         terminate_thread_flag = False
+        print("HOLDER")
         while True:
             try:
                 if terminate_thread_flag == True:

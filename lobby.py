@@ -57,13 +57,13 @@ class Lobby:
         terminate_thread_flag = False
         while True:  
             try:
-                if terminate_thread_flag == True:
-                    print("Lobby Thread terminated for address: " + player["address"])
-                    return
                 bytes_message = player["connection"].recv(2048)
                 message_bulk = bytes_message.decode("utf-8")
                 message_list = message_bulk.split('$')
                 for message in message_list:
+                    if terminate_thread_flag == True:
+                        print("Lobby Thread terminated for address: " + player["address"])
+                        return
                     #print(88888)
                     #print(message)
                     if message == "":
