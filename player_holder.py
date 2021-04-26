@@ -109,6 +109,7 @@ class PlayerHolder:
             print(type(message["values"]))
             player_new_position = json.loads(message["values"])
             print(player_new_position)
+            print(player_new_position['id'])
             print(type(player_new_position['id']))
             #player_list[player_new_position['id']]
             return False
