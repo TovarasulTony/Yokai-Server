@@ -35,10 +35,9 @@ class PlayerHolder:
         self.send_primordial_id(added_player)
         self.set_player_primary_position(added_player)
         self.send_init_info(added_player)
-        print("Gelu")
-        self.player_list.append(added_player)  
-        print("Gelut")
+        self.player_list.append(added_player)
         start_new_thread(self.clientthread, (new_player,))
+        print("rege")
 
     def set_player_primary_position(self, player):
         added_player_position = copy.deepcopy(player_position_dict)
