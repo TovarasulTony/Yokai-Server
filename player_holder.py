@@ -103,9 +103,9 @@ class PlayerHolder:
 
     def execute_command(self, player, message):
         if message["message"] == "player_moved":
-        	print(55555555555)
-        	print(message["values"])
-        	print(message["values"]["x"])
+            print(55555555555)
+            print(message["values"])
+            print(message["values"]["x"])
             #json.loads(message["values"])
             return False
         return False
