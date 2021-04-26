@@ -105,7 +105,7 @@ class PlayerHolder:
         print(666677777)
         if message["message"] == "player_moved":
             print(55555555555)
-            print(message["values"])
+            #print(message["values"])
             print(message["values"]["x"])
             #json.loads(message["values"])
             return False
