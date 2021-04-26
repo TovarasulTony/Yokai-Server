@@ -27,7 +27,7 @@ class Lobby:
         new_player["connection"] = conn
         new_player["address"] = addr
         self.lobby_list.append(new_player) 
-        self.setup_lobby_player(player) 
+        self.setup_lobby_player(new_player) 
         print(str(new_player["address"]) + " connected")
         start_new_thread(self.clientthread, (new_player,))
 
