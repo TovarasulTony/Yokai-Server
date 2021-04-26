@@ -1,4 +1,5 @@
 from _thread import *
+import copy
 import json
 
 command_dict = {
