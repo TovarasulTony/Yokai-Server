@@ -85,4 +85,4 @@ class Lobby:
         if message["message"] == "enter_game":
             self.command_callback(player, message)
             return True
-        return False
+        return True
