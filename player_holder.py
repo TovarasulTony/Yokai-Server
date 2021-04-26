@@ -35,7 +35,6 @@ class PlayerHolder:
         self.send_primordial_id(added_player)
         self.set_player_primary_position(added_player)
         self.send_init_info(added_player)
-        self.player_list.append(added_player)
         start_new_thread(self.clientthread, (added_player,))
 
     def set_player_primary_position(self, player):
@@ -107,7 +106,9 @@ class PlayerHolder:
             print(55555555555)
             #print(message["values"])
             print(message["values"]["x"])
-            #json.loads(message["values"])
+            player_new_position = json.loads(message["values"])
+            print(type(player_new_position['id']))
+            #player_list[player_new_position['id']]
             return False
         return False
 
