@@ -1,7 +1,7 @@
 from _thread import *
 import json
 
-command = {
+command_dict = {
   "command_type": "INVALID",
   "message": "",
   "values": ""
@@ -21,7 +21,7 @@ class Lobby:
 
     def add_potential_player(self, conn, addr):
         self.id_count+=1
-        new_player = player_dict
+        new_player = copy.deepcopy(player_dict)
         new_player["id"] = self.id_count
         new_player["connection"] = conn
         new_player["address"] = addr
@@ -40,7 +40,7 @@ class Lobby:
         self.lobby_list.remove(player)
 
     def setup_lobby_player(self, player):
-        lobby_info = command
+        lobby_info = copy.deepcopy(command_dict)
         lobby_info["command_type"] = "LOBBY"
         lobby_info["message"] = "lobby_count"
         lobby_info["values"] = len(self.lobby_list)

@@ -1,19 +1,20 @@
 from _thread import *
+import copy
 import json
 
-command = {
+command_dict = {
   "command_type": "INVALID",
   "message": "",
   "values": ""
 }
 
-player_position = {
+player_position_dict = {
   "x": None,
   "y": None,
   "z": None
 }
 
-player_info = {
+player_info_dict = {
   "id": -1,
   "connection": None,
   "address": "",
@@ -26,7 +27,7 @@ class PlayerHolder:
         #self.player_info_list = {}
 
     def add_player(self, player):
-        added_player = player_info
+        added_player = copy.deepcopy(player_info_dict)
         print(111111)
         added_player["id"] = player["id"]
         print(player["id"])
@@ -49,14 +50,14 @@ class PlayerHolder:
         start_new_thread(self.clientthread, (new_player,))
 
     def set_player_primary_position(self, player):
-        added_player_position = player_position
+        added_player_position = copy.deepcopy(player_position_dict)
         added_player_position["x"] = 150
         added_player_position["y"] = 4
         added_player_position["z"] = 30 + 10 * player["id"]
         player["player_position"] = added_player_position
 
     def send_primordial_id(self, player):
-        player_id_json = command
+        player_id_json = copy.deepcopy(command_dict)
         player_id_json["command_type"] = "LEVEL"
         player_id_json["message"] = "set_primordial_id"
         player_id_json["values"] = player["id"]
@@ -74,7 +75,7 @@ class PlayerHolder:
               "z": player_info["player_position"]["z"]
             }
             players_info_list.append(player_info_json)
-        player_json = command
+        player_json = copy.deepcopy(command_dict)
         player_json["command_type"] = "LEVEL"
         player_json["message"] = "set_primary_position"
         player_json["values"] = json.dumps(players_info_list)
