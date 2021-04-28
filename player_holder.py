@@ -114,9 +114,9 @@ class PlayerHolder:
             print(new_position["z"])
             print(player_new_position["id"])
             #de mutat intr-o functie???
-            print(self.player_list["id"]["player_position"]["x"])
+            print(self.player_list[player_new_position['id']]["player_position"]["x"])
             self.player_list[player_new_position['id']]["player_position"]=new_position
-            print(self.player_list["id"]["player_position"]["x"])
+            print(self.player_list[player_new_position['id']]["player_position"]["x"])
             #--------------------
             '''
 
