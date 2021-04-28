@@ -11,7 +11,8 @@ command_dict = {
 player_position_dict = {
   "x": None,
   "y": None,
-  "z": None
+  "z": None,
+  "y_rotation": None,
 }
 
 player_info_dict = {
@@ -35,13 +36,29 @@ class PlayerHolder:
         self.send_primordial_id(added_player)
         self.set_player_primary_position(added_player)
         self.send_init_info(added_player)
+        self.inform_other_players(added_player)
         start_new_thread(self.clientthread, (added_player,))
+
+    def inform_other_players(self, player):
+        player_position_json = copy.deepcopy(player_position_dict)
+        player_position_json["id"] = player["id"]
+        player_position_json["x"] = player["player_position"]["x"]
+        player_position_json["y"] = player["player_position"]["y"]
+        player_position_json["z"] = player["player_position"]["z"]
+        player_position_json["y_rotation"] = player["player_position"]["y_rotation"]
+
+        player_command_json = copy.deepcopy(command_dict)
+        player_command_json["command_type"] = "LEVEL"
+        player_command_json["message"] = "add_new_player"
+        player_command_json["values"] = json.dumps(player_position_json)
+        self.broadcast(player, player_command_json)
 
     def set_player_primary_position(self, player):
         added_player_position = copy.deepcopy(player_position_dict)
         added_player_position["x"] = 150
         added_player_position["y"] = 4
         added_player_position["z"] = 30 + 10 * player["id"]
+        added_player_position["y_rotation"] = 0
         player["player_position"] = added_player_position
 
     def send_primordial_id(self, player):
@@ -60,7 +77,8 @@ class PlayerHolder:
               "id": player_info["id"],
               "x": player_info["player_position"]["x"],
               "y": player_info["player_position"]["y"],
-              "z": player_info["player_position"]["z"]
+              "z": player_info["player_position"]["z"],
+              "y_rotation": player_info["player_position"]["y_rotation"]
             }
             players_info_list.append(player_info_json)
         player_json = copy.deepcopy(command_dict)
@@ -107,6 +125,7 @@ class PlayerHolder:
             new_position["x"] = player_new_position["x"]
             new_position["y"] = player_new_position["y"]
             new_position["z"] = player_new_position["z"]
+            new_position["y_rotation"] = player_new_position["y_rotation"]
             print("-----------------")
             print(message["values"])
             print(new_position["x"])
@@ -138,7 +157,8 @@ class PlayerHolder:
                   "id": player_info["id"],
                   "x": player_info["player_position"]["x"],
                   "y": player_info["player_position"]["y"],
-                  "z": player_info["player_position"]["z"]
+                  "z": player_info["player_position"]["z"],
+                  "y_rotation": player_info["player_position"]["y_rotation"]
                 }
                 players_info_list.append(player_info_json)
             player_json = copy.deepcopy(command_dict)
