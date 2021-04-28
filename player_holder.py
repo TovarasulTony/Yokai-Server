@@ -108,6 +108,7 @@ class PlayerHolder:
             new_position["y"] = player_new_position["y"]
             new_position["z"] = player_new_position["z"]
             print("-----------------")
+            print(message["values"])
             print(new_position["x"])
             print(new_position["y"])
             print(new_position["z"])
