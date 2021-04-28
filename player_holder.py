@@ -166,8 +166,8 @@ class PlayerHolder:
                     self.remove(clients)'''
 
     def send_message_to_player(self, player, message_json):
-    	string_message = "$"
-    	string_message += json.dumps(message_json)
-    	string_message += "$"
+        string_message = "$"
+        string_message += json.dumps(message_json)
+        string_message += "$"
         print(player["connection"])
         print(player["connection"].send(bytes(string_message, 'UTF-8')))
