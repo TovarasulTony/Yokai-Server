@@ -1,5 +1,10 @@
 # Yokai-Server
-![alt text](https://github.com/TovarasulTony/Yokai-Server/blob/master/_git_related/images/yokai-server.png?raw=true)
+![Banner](https://github.com/TovarasulTony/Yokai-Server/blob/master/_git_related/images/yokai-server.png?raw=true)
+
+
+
+## Overview:
+![Overview](https://github.com/TovarasulTony/Yokai-Server/blob/master/_git_related/images/Milestones_v1.png?raw=true)
 
 ## Sources:
 [**Server**](https://github.com/TovarasulTony/Yokai-Server)
