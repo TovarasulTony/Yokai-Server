@@ -89,16 +89,18 @@ class PlayerHolder:
             self.broadcast_command(player, "update_player_position", json.dumps(player_new_position))
         return False
 
+    def send_message_to_player(self, player, message_json):
+        print("[mesage] "+message_json)
+        string_message = "$"
+        string_message += json.dumps(message_json)
+        string_message += "$"
+        player["connection"].send(bytes(string_message, 'UTF-8'))
+
     def make_client_command(self, player, message, values=""):
-        print("???")
         command_json = copy.deepcopy(command_dict)
-        print("???")
         command_json["command_type"] = "LEVEL"
-        print("???")
         command_json["message"] = message
-        print("???")
         command_json["values"] = values
-        print("???")
         self.send_message_to_player(player, command_json)
 
     def broadcast_command(self, player, message, values=""):
@@ -106,13 +108,6 @@ class PlayerHolder:
             if player_in_list["player_info"]["id"] == player["player_info"]["id"]:
                 continue
             self.make_client_command(player_in_list, message, values)
-
-    def send_message_to_player(self, player, message_json):
-        print("[mesage] "+message_json)
-        string_message = "$"
-        string_message += json.dumps(message_json)
-        string_message += "$"
-        player["connection"].send(bytes(string_message, 'UTF-8'))
 
     def inform_lobby_players_number(self):
         self.lobby_ref.number_of_players_changed(len(self.player_list)) 
