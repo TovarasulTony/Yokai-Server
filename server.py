@@ -13,8 +13,8 @@ class ServerClass:
         self.Port = 65432
         self.server.bind((self.IP_address, self.Port))
         self.server.listen(2)
-        self.holder = PlayerHolder()
         self.lobby = Lobby(self.command_handler)
+        self.holder = PlayerHolder(lobby)
 
     def command_handler(self, player, command):
         print("command:")

@@ -19,6 +19,7 @@ class Lobby:
         self.lobby_list = []
         self.command_callback = command_callback
         self.id_count = -1
+        self.game_players_count = 0
 
     def add_potential_player(self, conn, addr):
         self.id_count+=1
@@ -33,9 +34,11 @@ class Lobby:
 
     def remove_potential_player(self, player):
         self.lobby_list.remove(player)
+        self.broadcast_command(player, "lobby_count", len(self.lobby_list))
 
     def setup_lobby_player(self, player):
-        self.make_client_command(player, "lobby_count", len(self.lobby_list))
+        self.make_client_command(player, "game_count", game_players_count)
+        self.broadcast_command(player, "lobby_count", len(self.lobby_list))
 
     def send_message_to_player(self, player, message_json):
         string_message = "$"
@@ -82,6 +85,8 @@ class Lobby:
 
     def broadcast_command(self, player, message, values=""):
         for player_in_list in self.player_list:
-            if player_in_list["id"] == player["id"]:
-                continue
             self.make_client_command(player_in_list, message, values)
+
+    def number_of_players_changed(self, new_number):
+        self.game_players_count = new_number
+        self.broadcast_command(player, "game_count", game_players_count)

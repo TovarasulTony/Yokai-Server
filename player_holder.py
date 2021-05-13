@@ -23,8 +23,9 @@ player_struct_dict = {
 }
 
 class PlayerHolder:
-    def __init__(self):
+    def __init__(self, lobby_ref):
         self.player_list = []
+        self.lobby_ref = lobby_ref
 
     def add_player(self, player):
         added_player = copy.deepcopy(player_struct_dict)
@@ -32,6 +33,7 @@ class PlayerHolder:
         added_player["connection"] = player["connection"]
         added_player["address"] = player["address"]
         self.player_list.insert(added_player["player_info"]["id"], added_player)
+        self.inform_lobby_players_number()
         self.make_client_command(player, "set_primordial_id", added_player["player_info"]["id"])
         self.send_init_info(added_player)
         self.broadcast_command(added_player, "add_new_player", json.dumps(player["player_info"]))
@@ -106,3 +108,7 @@ class PlayerHolder:
         string_message += "$"
         print(player["connection"])
         print(player["connection"].send(bytes(string_message, 'UTF-8')))
+
+    def inform_lobby_players_number(self):
+        self.lobby_ref.number_of_players_changed(len(player_list))
+        return 
