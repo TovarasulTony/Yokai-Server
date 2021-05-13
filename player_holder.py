@@ -110,5 +110,5 @@ class PlayerHolder:
         print(player["connection"].send(bytes(string_message, 'UTF-8')))
 
     def inform_lobby_players_number(self):
-        self.lobby_ref.number_of_players_changed(len(player_list))
+        self.lobby_ref.number_of_players_changed(len(self.player_list))
         return 

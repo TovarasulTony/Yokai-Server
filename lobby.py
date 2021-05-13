@@ -84,7 +84,7 @@ class Lobby:
         self.send_message_to_player(player, command_json)
 
     def broadcast_command(self, player, message, values=""):
-        for player_in_list in self.player_list:
+        for player_in_list in self.lobby_list:
             self.make_client_command(player_in_list, message, values)
 
     def number_of_players_changed(self, new_number):
