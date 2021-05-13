@@ -14,7 +14,7 @@ class ServerClass:
         self.server.bind((self.IP_address, self.Port))
         self.server.listen(2)
         self.lobby = Lobby(self.command_handler)
-        self.holder = PlayerHolder(lobby)
+        self.holder = PlayerHolder(self.lobby)
 
     def command_handler(self, player, command):
         print("command:")
