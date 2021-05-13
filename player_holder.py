@@ -28,13 +28,13 @@ class PlayerHolder:
         self.lobby_ref = lobby_ref
 
     def add_player(self, player):
-        print("Hai")
         added_player = copy.deepcopy(player_struct_dict)
         added_player["player_info"] = self.setup_player(player)
         added_player["connection"] = player["connection"]
         added_player["address"] = player["address"]
         self.player_list.insert(added_player["player_info"]["id"], added_player)
         self.inform_lobby_players_number()
+        print("Hey")
         self.make_client_command(player, "set_primordial_id", added_player["player_info"]["id"])
         print("Hey")
         self.send_init_info(added_player)
@@ -112,5 +112,4 @@ class PlayerHolder:
         player["connection"].send(bytes(string_message, 'UTF-8'))
 
     def inform_lobby_players_number(self):
-        self.lobby_ref.number_of_players_changed(len(self.player_list))
-        return 
+        self.lobby_ref.number_of_players_changed(len(self.player_list)) 
