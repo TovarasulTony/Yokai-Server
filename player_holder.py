@@ -32,10 +32,9 @@ class PlayerHolder:
         added_player["player_info"] = self.setup_player(player)
         added_player["connection"] = player["connection"]
         added_player["address"] = player["address"]
-        print(added_player["player_info"]["id"])
         self.player_list.insert(added_player["player_info"]["id"], added_player)
-        print("Hey")
         self.inform_lobby_players_number()
+        print("Hey")
         self.make_client_command(player, "set_primordial_id", added_player["player_info"]["id"])
         print("Hey")
         self.send_init_info(added_player)
