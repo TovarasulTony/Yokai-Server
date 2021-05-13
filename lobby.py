@@ -37,7 +37,7 @@ class Lobby:
         self.broadcast_command(player, "lobby_count", len(self.lobby_list))
 
     def setup_lobby_player(self, player):
-        self.make_client_command(player, "game_count", game_players_count)
+        self.make_client_command(player, "game_count", self.game_players_count)
         self.broadcast_command(player, "lobby_count", len(self.lobby_list))
 
     def send_message_to_player(self, player, message_json):
