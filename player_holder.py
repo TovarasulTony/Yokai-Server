@@ -91,7 +91,7 @@ class PlayerHolder:
 
     def send_message_to_player(self, player, message_json):
         print(231)
-        print("[mesage] "+message_json)
+        print(type(message_json))
         string_message = "$"
         string_message += json.dumps(message_json)
         string_message += "$"
