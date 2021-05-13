@@ -22,6 +22,7 @@ class ServerClass:
             self.holder.add_player(player)
 
     def main_loop(self):
+        print("Server UP!")
         while True:
             conn, addr = self.server.accept()
             self.lobby.add_potential_player(conn, addr)

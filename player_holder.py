@@ -90,8 +90,6 @@ class PlayerHolder:
         return False
 
     def send_message_to_player(self, player, message_json):
-        print(231)
-        print(type(message_json))
         string_message = "$"
         string_message += json.dumps(message_json)
         string_message += "$"
@@ -102,9 +100,7 @@ class PlayerHolder:
         command_json["command_type"] = "LEVEL"
         command_json["message"] = message
         command_json["values"] = values
-        print(123)
         self.send_message_to_player(player, command_json)
-        print(123456)
 
     def broadcast_command(self, player, message, values=""):
         for player_in_list in self.player_list:
