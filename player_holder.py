@@ -90,6 +90,7 @@ class PlayerHolder:
         return False
 
     def make_client_command(self, player, message, values=""):
+        print("???")
         command_json = copy.deepcopy(command_dict)
         command_json["command_type"] = "LEVEL"
         command_json["message"] = message
