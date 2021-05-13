@@ -29,7 +29,6 @@ class Lobby:
         new_player["address"] = addr
         self.lobby_list.append(new_player) 
         self.setup_lobby_player(new_player) 
-        print(str(new_player["address"]) + " connected")
         start_new_thread(self.clientthread, (new_player,))
 
     def remove_potential_player(self, player):
@@ -44,8 +43,7 @@ class Lobby:
         string_message = "$"
         string_message += json.dumps(message_json)
         string_message += "$"
-        print(player["connection"])
-        print(player["connection"].send(bytes(json.dumps(message_json), 'UTF-8')))
+        player["connection"].send(bytes(json.dumps(message_json), 'UTF-8'))
 
     def clientthread(self, player):
         terminate_thread_flag = False
