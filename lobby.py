@@ -89,4 +89,4 @@ class Lobby:
 
     def number_of_players_changed(self, new_number):
         self.game_players_count = new_number
-        self.broadcast_command(player, "game_count", game_players_count)
+        self.broadcast_command(player, "game_count", self.game_players_count)
