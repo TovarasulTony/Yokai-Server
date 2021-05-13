@@ -92,9 +92,13 @@ class PlayerHolder:
     def make_client_command(self, player, message, values=""):
         print("???")
         command_json = copy.deepcopy(command_dict)
+        print("???")
         command_json["command_type"] = "LEVEL"
+        print("???")
         command_json["message"] = message
+        print("???")
         command_json["values"] = values
+        print("???")
         self.send_message_to_player(player, command_json)
 
     def broadcast_command(self, player, message, values=""):
