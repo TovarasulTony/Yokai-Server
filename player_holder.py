@@ -28,6 +28,7 @@ class PlayerHolder:
         self.lobby_ref = lobby_ref
 
     def add_player(self, player):
+        print("Hai")
         added_player = copy.deepcopy(player_struct_dict)
         added_player["player_info"] = self.setup_player(player)
         added_player["connection"] = player["connection"]
