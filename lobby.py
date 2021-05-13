@@ -86,6 +86,5 @@ class Lobby:
             self.make_client_command(player_in_list, message, values)
 
     def number_of_players_changed(self, new_number):
-        print("Zolo")
         self.game_players_count = new_number
         self.broadcast_command(None, "game_count", self.game_players_count)
