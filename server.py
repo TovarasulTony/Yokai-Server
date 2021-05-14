@@ -17,7 +17,6 @@ class ServerClass:
         self.holder = PlayerHolder(self.lobby)
 
     def command_handler(self, player, command):
-        print(55555)
         if command["message"] == "enter_game":
             self.lobby.remove_potential_player(player)
             self.holder.add_player(player)
