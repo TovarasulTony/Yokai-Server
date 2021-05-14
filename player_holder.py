@@ -36,9 +36,7 @@ class PlayerHolder:
         self.inform_lobby_players_number()
         self.make_client_command(added_player, "set_primordial_id", added_player["player_info"]["id"])
         self.send_init_info(added_player)
-        print("?????")
-        new_player_info_json = json.dumps(player["player_info"])
-        self.broadcast_command(added_player, "add_new_player", new_player_info_json)
+        self.broadcast_command(added_player, "add_new_player", json.dumps(added_player["player_info"]))
         start_new_thread(self.clientthread, (added_player,))
 
     def setup_player(self, player):
