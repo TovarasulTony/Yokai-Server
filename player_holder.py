@@ -83,6 +83,7 @@ class PlayerHolder:
                 continue
 
     def execute_command(self, player, received_command):
+        print(received_command["message"])
         if received_command["message"] == "player_moved":
             player_new_position = json.loads(received_command["values"])
             print(player_new_position["id"])
