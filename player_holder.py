@@ -78,6 +78,7 @@ class PlayerHolder:
                         is broken, in this case we remove the connection"""
                         continue
                     message = json.loads(message)
+                    print(message)
                     terminate_thread_flag = self.execute_command(player, message)
             except:  
                 continue
