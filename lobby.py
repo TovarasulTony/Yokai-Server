@@ -22,7 +22,6 @@ class Lobby:
         self.game_players_count = 0
 
     def add_potential_player(self, conn, addr):
-        print(66666666666)
         self.id_count+=1
         new_player = copy.deepcopy(player_dict)
         new_player["id"] = self.id_count
@@ -59,7 +58,9 @@ class Lobby:
                         is broken, in this case we remove the connection"""
                         continue
                     message = json.loads(message)
+                    print(666666666)
                     terminate_thread_flag = self.execute_command(player, message)
+                    print(88888888)
                     if terminate_thread_flag == True:
                         print("Lobby Thread terminated for address: " + player["address"])
                         return
@@ -69,8 +70,8 @@ class Lobby:
                 continue
 
     def execute_command(self, player, message):
+        print(77777777777)
         if message["message"] == "enter_game":
-            print(555555555)
             self.command_callback(player, message)
             return True
         return False
