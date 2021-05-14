@@ -58,9 +58,7 @@ class Lobby:
                         is broken, in this case we remove the connection"""
                         continue
                     message = json.loads(message)
-                    print(666666666)
                     terminate_thread_flag = self.execute_command(player, message)
-                    print(88888888)
                     if terminate_thread_flag == True:
                         print("Lobby Thread terminated for address: " + player["address"])
                         return
@@ -70,7 +68,6 @@ class Lobby:
                 continue
 
     def execute_command(self, player, message):
-        print(77777777777)
         if message["message"] == "enter_game":
             self.command_callback(player, message)
             return True
