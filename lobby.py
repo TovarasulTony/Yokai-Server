@@ -9,7 +9,6 @@ command_dict = {
 }
 
 player_dict = {
-  "id": -1,
   "connection": None,
   "address": ""
 }
@@ -18,13 +17,10 @@ class Lobby:
     def __init__(self, command_callback):
         self.lobby_list = []
         self.command_callback = command_callback
-        self.id_count = -1
         self.game_players_count = 0
 
     def add_potential_player(self, conn, addr):
-        self.id_count+=1
         new_player = copy.deepcopy(player_dict)
-        new_player["id"] = self.id_count
         new_player["connection"] = conn
         new_player["address"] = addr
         self.lobby_list.append(new_player) 

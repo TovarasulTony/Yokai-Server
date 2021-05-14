@@ -26,8 +26,10 @@ class PlayerHolder:
     def __init__(self, lobby_ref):
         self.player_list = []
         self.lobby_ref = lobby_ref
+        self.id_count = -1
 
     def add_player(self, player):
+        self.id_count+=1
         added_player = copy.deepcopy(player_struct_dict)
         added_player["player_info"] = self.setup_player(player)
         added_player["connection"] = player["connection"]
@@ -41,10 +43,10 @@ class PlayerHolder:
 
     def setup_player(self, player):
         added_player_position = copy.deepcopy(player_position_json)
-        added_player_position["id"] = player["id"]
+        added_player_position["id"] = self.id_count
         added_player_position["x"] = 150
         added_player_position["y"] = 4
-        added_player_position["z"] = 30 + 10 * player["id"]
+        added_player_position["z"] = 30 + 10 * added_player_position["id"]
         added_player_position["y_rotation"] = 0
         return added_player_position
 
@@ -88,8 +90,6 @@ class PlayerHolder:
         print(received_command["message"])
         if received_command["message"] == "player_moved":
             player_new_position = json.loads(received_command["values"])
-            print(player_new_position["id"])
-            print(player_new_position)
             self.player_list[player_new_position["id"]]["player_info"]=player_new_position
             self.broadcast_command(player, "update_player_position", json.dumps(player_new_position))
         return False
@@ -101,7 +101,6 @@ class PlayerHolder:
         player["connection"].send(bytes(string_message, 'UTF-8'))
 
     def make_client_command(self, player, message, values=""):
-        print("make_client_command")
         command_json = copy.deepcopy(command_dict)
         command_json["command_type"] = "LEVEL"
         command_json["message"] = message
@@ -109,7 +108,6 @@ class PlayerHolder:
         self.send_message_to_player(player, command_json)
 
     def broadcast_command(self, player, message, values=""):
-        print("broadcast_command")
         for player_in_list in self.player_list:
             if player_in_list["player_info"]["id"] == player["player_info"]["id"]:
                 continue
