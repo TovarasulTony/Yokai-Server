@@ -37,7 +37,9 @@ class PlayerHolder:
         self.make_client_command(added_player, "set_primordial_id", added_player["player_info"]["id"])
         self.send_init_info(added_player)
         self.broadcast_command(added_player, "add_new_player", json.dumps(player["player_info"]))
+        print(1111)
         start_new_thread(self.clientthread, (added_player,))
+        print(2222)
 
     def setup_player(self, player):
         added_player_position = copy.deepcopy(player_position_json)
