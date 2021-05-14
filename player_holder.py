@@ -37,9 +37,8 @@ class PlayerHolder:
         self.make_client_command(added_player, "set_primordial_id", added_player["player_info"]["id"])
         self.send_init_info(added_player)
         print("?????")
-        ada = player_struct_dict
-        self.broadcast_command(added_player, "add_new_player", json.dumps(player["player_info"]))
-        ada = player_struct_dict
+        new_player_info_json = json.dumps(player["player_info"])
+        self.broadcast_command(added_player, "add_new_player", new_player_info_json)
         start_new_thread(self.clientthread, (added_player,))
 
     def setup_player(self, player):
