@@ -63,6 +63,7 @@ class PlayerHolder:
             self.player_list.remove(connection)
 
     def clientthread(self, player):
+        print("pragma")
         terminate_thread_flag = False
         while True:
             try:
