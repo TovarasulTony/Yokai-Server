@@ -98,7 +98,7 @@ class PlayerHolder:
         string_message = "$"
         string_message += json.dumps(message_json)
         string_message += "$"
-        player["connection"].send(bytes(string_message, 'UTF-8'))
+        player["connection"].sendall(bytes(string_message, 'UTF-8'))
 
     def make_client_command(self, player, message, values=""):
         command_json = copy.deepcopy(command_dict)
