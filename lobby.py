@@ -59,7 +59,6 @@ class Lobby:
                         continue
                     message = json.loads(message)
                     terminate_thread_flag = self.execute_command(player, message)
-                    print(terminate_thread_flag)
                     if terminate_thread_flag == True:
                         print("Lobby Thread terminated for address: " + player["address"])
                         return

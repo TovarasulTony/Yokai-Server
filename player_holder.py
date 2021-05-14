@@ -85,6 +85,8 @@ class PlayerHolder:
     def execute_command(self, player, received_command):
         if received_command["message"] == "player_moved":
             player_new_position = json.loads(received_command["values"])
+            print(player_new_position["id"])
+            print(player_new_position)
             self.player_list[player_new_position["id"]]["player_info"]=player_new_position
             self.broadcast_command(player, "update_player_position", json.dumps(player_new_position))
         return False
