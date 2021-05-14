@@ -28,19 +28,23 @@ class PlayerHolder:
         self.lobby_ref = lobby_ref
 
     def add_player(self, player):
-        print(1111)
+        print("?????")
         added_player = copy.deepcopy(player_struct_dict)
         added_player["player_info"] = self.setup_player(player)
         added_player["connection"] = player["connection"]
         added_player["address"] = player["address"]
+        print("?????")
         self.player_list.insert(added_player["player_info"]["id"], added_player)
+        print("?????")
         self.inform_lobby_players_number()
+        print("?????")
         self.make_client_command(added_player, "set_primordial_id", added_player["player_info"]["id"])
+        print("?????")
         self.send_init_info(added_player)
+        print("?????")
         self.broadcast_command(added_player, "add_new_player", json.dumps(player["player_info"]))
-        print(1111)
+        print("?????")
         start_new_thread(self.clientthread, (added_player,))
-        print(2222)
 
     def setup_player(self, player):
         added_player_position = copy.deepcopy(player_position_json)
