@@ -28,20 +28,14 @@ class PlayerHolder:
         self.lobby_ref = lobby_ref
 
     def add_player(self, player):
-        print("?????")
         added_player = copy.deepcopy(player_struct_dict)
         added_player["player_info"] = self.setup_player(player)
         added_player["connection"] = player["connection"]
         added_player["address"] = player["address"]
-        print("?????")
         self.player_list.insert(added_player["player_info"]["id"], added_player)
-        print("?????")
         self.inform_lobby_players_number()
-        print("?????")
         self.make_client_command(added_player, "set_primordial_id", added_player["player_info"]["id"])
-        print("?????")
         self.send_init_info(added_player)
-        print("?????")
         self.broadcast_command(added_player, "add_new_player", json.dumps(player["player_info"]))
         print("?????")
         start_new_thread(self.clientthread, (added_player,))
@@ -108,6 +102,7 @@ class PlayerHolder:
         player["connection"].send(bytes(string_message, 'UTF-8'))
 
     def make_client_command(self, player, message, values=""):
+        print("make_client_command")
         command_json = copy.deepcopy(command_dict)
         command_json["command_type"] = "LEVEL"
         command_json["message"] = message
@@ -115,6 +110,7 @@ class PlayerHolder:
         self.send_message_to_player(player, command_json)
 
     def broadcast_command(self, player, message, values=""):
+        print("broadcast_command")
         for player_in_list in self.player_list:
             if player_in_list["player_info"]["id"] == player["player_info"]["id"]:
                 continue
