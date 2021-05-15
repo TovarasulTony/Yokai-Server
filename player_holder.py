@@ -65,7 +65,6 @@ class PlayerHolder:
             self.player_list.remove(connection)
 
     def clientthread(self, player):
-        print("pragma")
         terminate_thread_flag = False
         while True:
             try:
@@ -81,13 +80,11 @@ class PlayerHolder:
                         is broken, in this case we remove the connection"""
                         continue
                     message = json.loads(message)
-                    print(message)
                     terminate_thread_flag = self.execute_command(player, message)
             except:  
                 continue
 
     def execute_command(self, player, received_command):
-        print(received_command["message"])
         if received_command["message"] == "player_moved":
             player_new_position = json.loads(received_command["values"])
             self.player_list[player_new_position["id"]]["player_info"]=player_new_position
