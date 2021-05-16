@@ -64,6 +64,7 @@ class PlayerHolder:
         if player in self.player_list:
             self.player_list.remove(player)
         self.broadcast_command(player, "remove_player", player["player_info"]["id"])
+        self.inform_lobby_players_number()
 
     def clientthread(self, player):
         terminate_thread_flag = False
