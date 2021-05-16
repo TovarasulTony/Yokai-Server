@@ -13,17 +13,16 @@ class ServerClass:
         self.Port = 65432
         self.server.bind((self.IP_address, self.Port))
         self.server.listen(2)
-        self.holder = PlayerHolder()
         self.lobby = Lobby(self.command_handler)
+        self.holder = PlayerHolder(self.lobby)
 
     def command_handler(self, player, command):
-        print("command:")
-        print(command)
         if command["message"] == "enter_game":
             self.lobby.remove_potential_player(player)
             self.holder.add_player(player)
 
     def main_loop(self):
+        print("Server UP!")
         while True:
             conn, addr = self.server.accept()
             self.lobby.add_potential_player(conn, addr)

@@ -8,88 +8,66 @@ command_dict = {
   "values": ""
 }
 
-player_position_dict = {
+player_position_json = {
+  "id": None,
   "x": None,
   "y": None,
   "z": None,
   "y_rotation": None,
 }
 
-player_info_dict = {
-  "id": -1,
+player_struct_dict = {
   "connection": None,
   "address": "",
-  "player_position": copy.deepcopy(player_position_dict)
+  "player_info": copy.deepcopy(player_position_json)
 }
 
 class PlayerHolder:
-    def __init__(self):
-        self.player_list = []
-        #self.player_info_list = {}
+    def __init__(self, lobby_ref):
+        self.player_dict = {}
+        self.lobby_ref = lobby_ref
+        self.id_count = -1
+        #self.terminate_thread_flag = False
 
     def add_player(self, player):
-        added_player = copy.deepcopy(player_info_dict)
-        added_player["id"] = player["id"]
+        self.id_count+=1
+        added_player = copy.deepcopy(player_struct_dict)
+        added_player["player_info"] = self.setup_player(player)
         added_player["connection"] = player["connection"]
         added_player["address"] = player["address"]
-        self.player_list.insert(added_player["id"], added_player)
-        self.send_primordial_id(added_player)
-        self.set_player_primary_position(added_player)
+        self.player_dict[added_player["player_info"]["id"]] = added_player
+        self.inform_lobby_players_number()
+        self.make_client_command(added_player, "set_primordial_id", added_player["player_info"]["id"])
         self.send_init_info(added_player)
-        self.inform_other_players(added_player)
+        self.broadcast_command(added_player, "add_new_player", json.dumps(added_player["player_info"]))
+        print("player added: " + str(added_player["player_info"]["id"]))
         start_new_thread(self.clientthread, (added_player,))
 
-    def inform_other_players(self, player):
-        player_position_json = copy.deepcopy(player_position_dict)
-        player_position_json["id"] = player["id"]
-        player_position_json["x"] = player["player_position"]["x"]
-        player_position_json["y"] = player["player_position"]["y"]
-        player_position_json["z"] = player["player_position"]["z"]
-        player_position_json["y_rotation"] = player["player_position"]["y_rotation"]
-
-        player_command_json = copy.deepcopy(command_dict)
-        player_command_json["command_type"] = "LEVEL"
-        player_command_json["message"] = "add_new_player"
-        player_command_json["values"] = json.dumps(player_position_json)
-        self.broadcast(player, player_command_json)
-
-    def set_player_primary_position(self, player):
-        added_player_position = copy.deepcopy(player_position_dict)
+    def setup_player(self, player):
+        added_player_position = copy.deepcopy(player_position_json)
+        added_player_position["id"] = self.id_count
         added_player_position["x"] = 150
         added_player_position["y"] = 4
-        added_player_position["z"] = 30 + 10 * player["id"]
+        added_player_position["z"] = 30 + 10 * added_player_position["id"]
         added_player_position["y_rotation"] = 0
-        player["player_position"] = added_player_position
+        return added_player_position
 
-    def send_primordial_id(self, player):
-        player_id_json = copy.deepcopy(command_dict)
-        player_id_json["command_type"] = "LEVEL"
-        player_id_json["message"] = "set_primordial_id"
-        player_id_json["values"] = player["id"]
-        self.send_message_to_player(player, player_id_json)
-
-    def send_init_info(self, player):
+    def send_init_info(self, _player):
         players_info_list = []
-        for player_info in self.player_list:
-            if player_info == None or player_info["id"] == None:
+        for player_id in self.player_dict:
+            player = self.player_dict[player_id]
+            if player == None:
                 continue
-            player_info_json = {
-              "id": player_info["id"],
-              "x": player_info["player_position"]["x"],
-              "y": player_info["player_position"]["y"],
-              "z": player_info["player_position"]["z"],
-              "y_rotation": player_info["player_position"]["y_rotation"]
-            }
-            players_info_list.append(player_info_json)
-        player_json = copy.deepcopy(command_dict)
-        player_json["command_type"] = "LEVEL"
-        player_json["message"] = "set_primary_position"
-        player_json["values"] = json.dumps(players_info_list)
-        self.send_message_to_player(player, player_json)
+            if player["player_info"]["id"] == None:
+                continue
+            players_info_list.append(player["player_info"])
+        self.make_client_command(player, "set_primary_position", json.dumps(players_info_list))
 
-    def remove(self, connection):
-        if connection in self.player_list:
-            self.player_list.remove(connection)
+    def remove(self, player):
+        if player["player_info"]["id"] in self.player_dict:
+            self.player_dict.pop(player["player_info"]["id"])
+        self.broadcast_command(player, "remove_player", player["player_info"]["id"])
+        self.inform_lobby_players_number()
 
     def clientthread(self, player):
         terminate_thread_flag = False
@@ -102,92 +80,52 @@ class PlayerHolder:
                 message_bulk = bytes_message.decode("utf-8")
                 message_list = message_bulk.split('$')
                 for message in message_list:
-                    #print(88888)
-                    #print(message)
+                    if message == "-" or message == "--":
+                        continue
                     if message == "":
+                        print("Broken connection")
+                        self.remove(player)
+                        return
                         """message may have no content if the connection  
                         is broken, in this case we remove the connection"""
-                        #print("cucu")  
-                        #print("MESAJ GOL")
-                        #player["connection"].close()
-                        #self.remove_potential_player(player["connection"])
-                        #self.remove(player["connection"])  
                         continue
                     message = json.loads(message)
                     terminate_thread_flag = self.execute_command(player, message)
             except:  
                 continue
 
-    def execute_command(self, player, message):
-        if message["message"] == "player_moved":
-            player_new_position = json.loads(message["values"])
-            new_position = copy.deepcopy(player_position_dict)
-            new_position["x"] = player_new_position["x"]
-            new_position["y"] = player_new_position["y"]
-            new_position["z"] = player_new_position["z"]
-            new_position["y_rotation"] = player_new_position["y_rotation"]
-            print("-----------------")
-            print(message["values"])
-            print(new_position["x"])
-            print(new_position["y"])
-            print(new_position["z"])
-            print(player_new_position["id"])
-            #de mutat intr-o functie???
-            print(self.player_list[player_new_position['id']]["player_position"]["x"])
-            self.player_list[player_new_position['id']]["player_position"]=new_position
-            print(self.player_list[player_new_position['id']]["player_position"]["x"])
-            #--------------------
-            '''
-
-            message_for_clients = copy.deepcopy(command_dict)
-            player_id_json["command_type"] = "LEVEL"
-            player_id_json["message"] = "update_players_positions"
-            player_id_json["values"] = player["id"]
-            self.send_message_to_player(player, player_id_json)
-            '''
-            #--------------------
-
-
-
-            players_info_list = []
-            for player_info in self.player_list:
-                if player_info == None or player_info["id"] == None:
-                    continue
-                player_info_json = {
-                  "id": player_info["id"],
-                  "x": player_info["player_position"]["x"],
-                  "y": player_info["player_position"]["y"],
-                  "z": player_info["player_position"]["z"],
-                  "y_rotation": player_info["player_position"]["y_rotation"]
-                }
-                players_info_list.append(player_info_json)
-            player_json = copy.deepcopy(command_dict)
-            player_json["command_type"] = "LEVEL"
-            player_json["message"] = "update_players_positions"
-            player_json["values"] = json.dumps(players_info_list)
-            self.broadcast(player, player_json)
-            return False
+    def execute_command(self, player, received_command):
+        if received_command["message"] == "player_moved":
+            player_new_position = json.loads(received_command["values"])
+            self.player_dict[player_new_position["id"]]["player_info"]=player_new_position
+            self.broadcast_command(player, "update_player_position", json.dumps(player_new_position))
+        if received_command["message"] == "break_connection":
+            print("break_connection")
+            self.remove(player)
+            print("player removed: " + str(player["player_info"]["id"]))
+            return True
         return False
-
-    def broadcast(self, player, message):
-        for player_in_list in self.player_list:
-            if player_in_list["id"] == player["id"]:
-                continue
-            self.send_message_to_player(player_in_list, message)
-            '''
-            if clients!=connection:  
-                try:  
-                    clients.send(bytes(message, 'UTF-8'))
-                except:  
-                    clients.close()  
-
-                    # if the link is broken, we remove the client  
-                    print("caca")  
-                    self.remove(clients)'''
 
     def send_message_to_player(self, player, message_json):
         string_message = "$"
         string_message += json.dumps(message_json)
         string_message += "$"
-        print(player["connection"])
-        print(player["connection"].send(bytes(string_message, 'UTF-8')))
+        player["connection"].sendall(bytes(string_message, 'UTF-8'))
+
+    def make_client_command(self, player, message, values=""):
+        command_json = copy.deepcopy(command_dict)
+        command_json["command_type"] = "LEVEL"
+        command_json["message"] = message
+        command_json["values"] = values
+        self.send_message_to_player(player, command_json)
+
+    def broadcast_command(self, player, message, values=""):
+        for player_id in self.player_dict:
+            player_in_list = self.player_dict[player_id]
+            if player_in_list["player_info"]["id"] == player["player_info"]["id"]:
+                continue
+            #print("brodcast to: " + str(player_in_list["player_info"]["id"]))
+            self.make_client_command(player_in_list, message, values)
+
+    def inform_lobby_players_number(self):
+        self.lobby_ref.number_of_players_changed(len(self.player_dict)) 
