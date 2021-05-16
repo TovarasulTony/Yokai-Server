@@ -60,9 +60,9 @@ class PlayerHolder:
             players_info_list.append(player["player_info"])
         self.make_client_command(player, "set_primary_position", json.dumps(players_info_list))
 
-    def remove(self, connection):
-        if connection in self.player_list:
-            self.player_list.remove(connection)
+    def remove(self, player):
+        if player in self.player_list:
+            self.player_list.remove(player)
 
     def clientthread(self, player):
         terminate_thread_flag = False
@@ -80,6 +80,8 @@ class PlayerHolder:
                         continue
                     if message == "":
                         print("MEsaj GOL")
+                        self.remove(player)
+                        return
                         """message may have no content if the connection  
                         is broken, in this case we remove the connection"""
                         continue
