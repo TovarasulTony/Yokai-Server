@@ -84,6 +84,7 @@ class PlayerHolder:
                         continue
                     if message == "":
                         print("Broken connection")
+                        self.remove(player)
                         return
                         """message may have no content if the connection  
                         is broken, in this case we remove the connection"""
