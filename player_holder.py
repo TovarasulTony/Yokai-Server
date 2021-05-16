@@ -63,6 +63,7 @@ class PlayerHolder:
     def remove(self, player):
         if player in self.player_list:
             self.player_list.remove(player)
+        self.broadcast_command(player, "remove_player", player["player_info"]["id"])
 
     def clientthread(self, player):
         terminate_thread_flag = False
@@ -78,9 +79,7 @@ class PlayerHolder:
                     if message == "-" or message == "--":
                         continue
                     if message == "":
-                        #print("Broken connection")
-                        #self.remove(player)
-                        #self.broadcast_command
+                        print("Broken connection")
                         return
                         """message may have no content if the connection  
                         is broken, in this case we remove the connection"""
@@ -95,8 +94,8 @@ class PlayerHolder:
             player_new_position = json.loads(received_command["values"])
             self.player_list[player_new_position["id"]]["player_info"]=player_new_position
             self.broadcast_command(player, "update_player_position", json.dumps(player_new_position))
-        if received_command["message"] == "test_command":
-            print("test_command")
+        if received_command["message"] == "break_connection":
+            self.remove(player)
         return False
 
     def send_message_to_player(self, player, message_json):
