@@ -78,9 +78,9 @@ class PlayerHolder:
                     if message == "-" or message == "--":
                         continue
                     if message == "":
-                        print("Broken connection")
-                        self.remove(player)
-                        self.broadcast_command
+                        #print("Broken connection")
+                        #self.remove(player)
+                        #self.broadcast_command
                         return
                         """message may have no content if the connection  
                         is broken, in this case we remove the connection"""
@@ -116,6 +116,7 @@ class PlayerHolder:
         for player_in_list in self.player_list:
             if player_in_list["player_info"]["id"] == player["player_info"]["id"]:
                 continue
+            print(player["connection"])
             self.make_client_command(player_in_list, message, values)
 
     def inform_lobby_players_number(self):
