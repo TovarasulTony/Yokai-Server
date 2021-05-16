@@ -40,6 +40,7 @@ class PlayerHolder:
         self.make_client_command(added_player, "set_primordial_id", added_player["player_info"]["id"])
         self.send_init_info(added_player)
         self.broadcast_command(added_player, "add_new_player", json.dumps(added_player["player_info"]))
+        print("player added: " + str(added_player["player_info"]["id"]))
         start_new_thread(self.clientthread, (added_player,))
 
     def setup_player(self, player):
@@ -99,6 +100,7 @@ class PlayerHolder:
         if received_command["message"] == "break_connection":
             print("break_connection")
             self.remove(player)
+            print("player removed: " + str(player["player_info"]["id"]))
             return True
         return False
 
@@ -119,7 +121,7 @@ class PlayerHolder:
         for player_in_list in self.player_list:
             if player_in_list["player_info"]["id"] == player["player_info"]["id"]:
                 continue
-            print(player["connection"])
+            print("brodcast to: " + str(player_in_list["player_info"]["id"]))
             self.make_client_command(player_in_list, message, values)
 
     def inform_lobby_players_number(self):
