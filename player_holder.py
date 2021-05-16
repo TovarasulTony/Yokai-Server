@@ -54,8 +54,8 @@ class PlayerHolder:
 
     def send_init_info(self, _player):
         players_info_list = []
-        for player in self.player_dict:
-            print(player)
+        for player_id in self.player_dict:
+            player = self.player_dict[player_id]
             if player == None:
                 continue
             if player["player_info"]["id"] == None:
@@ -119,7 +119,8 @@ class PlayerHolder:
         self.send_message_to_player(player, command_json)
 
     def broadcast_command(self, player, message, values=""):
-        for player_in_list in self.player_dict:
+        for player_id in self.player_dict:
+            player_in_list = self.player_dict[player_id]
             if player_in_list["player_info"]["id"] == player["player_info"]["id"]:
                 continue
             print("brodcast to: " + str(player_in_list["player_info"]["id"]))
