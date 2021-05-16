@@ -49,6 +49,8 @@ class Lobby:
                 message_bulk = bytes_message.decode("utf-8")
                 message_list = message_bulk.split('$')
                 for message in message_list:
+                    if message == "-" or message == "--":
+                        continue
                     if message == "":
                         """message may have no content if the connection  
                         is broken, in this case we remove the connection"""
