@@ -73,14 +73,14 @@ class PlayerHolder:
                     return
                 bytes_message = player["connection"].recv(2048)
                 message_bulk = bytes_message.decode("utf-8")
-                #print(message_bulk)
                 message_list = message_bulk.split('$')
                 for message in message_list:
                     if message == "-" or message == "--":
                         continue
                     if message == "":
-                        print("MEsaj GOL")
+                        print("Broken connection")
                         self.remove(player)
+                        self.broadcast_command
                         return
                         """message may have no content if the connection  
                         is broken, in this case we remove the connection"""
