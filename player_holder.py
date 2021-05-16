@@ -64,10 +64,8 @@ class PlayerHolder:
         self.make_client_command(player, "set_primary_position", json.dumps(players_info_list))
 
     def remove(self, player):
-        print(len(self.player_dict))
         if player["player_info"]["id"] in self.player_dict:
             self.player_dict.pop(player["player_info"]["id"])
-        print(len(self.player_dict))
         self.broadcast_command(player, "remove_player", player["player_info"]["id"])
         self.inform_lobby_players_number()
 
