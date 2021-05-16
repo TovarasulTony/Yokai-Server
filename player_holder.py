@@ -75,6 +75,8 @@ class PlayerHolder:
                 message_bulk = bytes_message.decode("utf-8")
                 message_list = message_bulk.split('$')
                 for message in message_list:
+                    if message == "-" || message == "--":
+                        continue
                     if message == "":
                         print("MEsaj GOL")
                         """message may have no content if the connection  
