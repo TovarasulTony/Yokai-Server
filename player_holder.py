@@ -35,7 +35,7 @@ class PlayerHolder:
         added_player["player_info"] = self.setup_player(player)
         added_player["connection"] = player["connection"]
         added_player["address"] = player["address"]
-        self.player_dict.update({str(added_player["player_info"]["id"]), added_player})
+        self.player_dict[added_player["player_info"]["id"]] = added_player
         self.inform_lobby_players_number()
         self.make_client_command(added_player, "set_primordial_id", added_player["player_info"]["id"])
         self.send_init_info(added_player)
@@ -65,7 +65,7 @@ class PlayerHolder:
 
     def remove(self, player):
         if player in self.player_dict:
-            self.player_dict.pop(player[str(player["player_info"]["id"])])
+            self.player_dict.pop(player["player_info"]["id"])
         self.broadcast_command(player, "remove_player", player["player_info"]["id"])
         self.inform_lobby_players_number()
 
@@ -96,7 +96,7 @@ class PlayerHolder:
     def execute_command(self, player, received_command):
         if received_command["message"] == "player_moved":
             player_new_position = json.loads(received_command["values"])
-            self.player_dict[str(player_new_position["id"])]["player_info"]=player_new_position
+            self.player_dict[player_new_position["id"]]["player_info"]=player_new_position
             self.broadcast_command(player, "update_player_position", json.dumps(player_new_position))
         if received_command["message"] == "break_connection":
             print("break_connection")
