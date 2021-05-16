@@ -23,6 +23,9 @@ class ServerClass:
 
     def main_loop(self):
         print("Server UP!")
+        test_dict = {}
+        test_dict.update({1,2})
+        print(test_dict[1])
         while True:
             conn, addr = self.server.accept()
             self.lobby.add_potential_player(conn, addr)
