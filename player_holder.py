@@ -76,6 +76,7 @@ class PlayerHolder:
                 message_list = message_bulk.split('$')
                 for message in message_list:
                     if message == "":
+                        print("MEsaj GOL")
                         """message may have no content if the connection  
                         is broken, in this case we remove the connection"""
                         continue
@@ -89,6 +90,8 @@ class PlayerHolder:
             player_new_position = json.loads(received_command["values"])
             self.player_list[player_new_position["id"]]["player_info"]=player_new_position
             self.broadcast_command(player, "update_player_position", json.dumps(player_new_position))
+        if received_command["message"] == "test_command":
+            print("test_command")
         return False
 
     def send_message_to_player(self, player, message_json):
