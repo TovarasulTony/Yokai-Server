@@ -25,7 +25,13 @@ class ServerClass:
         print("Server UP!")
         test_dict = {}
         test_dict[1] = 2
+        test_dict[2] = 2
+        test_dict[3] = 2
+        test_dict[4] = 2
+        test_dict.pop(2)
         print(test_dict[1])
+        print(test_dict[3])
+        print(test_dict[2])
         while True:
             conn, addr = self.server.accept()
             self.lobby.add_potential_player(conn, addr)
