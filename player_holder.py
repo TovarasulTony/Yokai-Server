@@ -123,7 +123,7 @@ class PlayerHolder:
             player_in_list = self.player_dict[player_id]
             if player_in_list["player_info"]["id"] == player["player_info"]["id"]:
                 continue
-            print("brodcast to: " + str(player_in_list["player_info"]["id"]))
+            #print("brodcast to: " + str(player_in_list["player_info"]["id"]))
             self.make_client_command(player_in_list, message, values)
 
     def inform_lobby_players_number(self):
