@@ -27,7 +27,7 @@ class PlayerHolder:
         self.player_list = []
         self.lobby_ref = lobby_ref
         self.id_count = -1
-        self.terminate_thread_flag = False
+        #self.terminate_thread_flag = False
 
     def add_player(self, player):
         self.id_count+=1
@@ -68,9 +68,10 @@ class PlayerHolder:
         self.inform_lobby_players_number()
 
     def clientthread(self, player):
+        terminate_thread_flag = False
         while True:
             try:
-                if self.terminate_thread_flag == True:
+                if terminate_thread_flag == True:
                     print("Lobby Thread terminated for address: " + player["address"])
                     return
                 bytes_message = player["connection"].recv(2048)
@@ -86,7 +87,7 @@ class PlayerHolder:
                         is broken, in this case we remove the connection"""
                         continue
                     message = json.loads(message)
-                    self.terminate_thread_flag = self.execute_command(player, message)
+                    terminate_thread_flag = self.execute_command(player, message)
             except:  
                 continue
 
@@ -96,6 +97,7 @@ class PlayerHolder:
             self.player_list[player_new_position["id"]]["player_info"]=player_new_position
             self.broadcast_command(player, "update_player_position", json.dumps(player_new_position))
         if received_command["message"] == "break_connection":
+            print("break_connection")
             self.remove(player)
             return True
         return False
