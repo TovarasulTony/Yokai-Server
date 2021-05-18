@@ -1,7 +1,6 @@
 from _thread import *
 import copy
 import json
-from player_holder import PlayerHolder
 from clues import CluesHandler
 
 command_dict = {
