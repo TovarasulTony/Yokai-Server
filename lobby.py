@@ -35,12 +35,6 @@ class Lobby:
         self.make_client_command(player, "game_count", self.game_players_count)
         self.broadcast_command(player, "lobby_count", len(self.lobby_list))
 
-    def send_message_to_player(self, player, message_json):
-        string_message = "$"
-        string_message += json.dumps(message_json)
-        string_message += "$"
-        player["connection"].sendall(bytes(json.dumps(message_json), 'UTF-8'))
-
     def clientthread(self, player):
         terminate_thread_flag = False
         while True:  
@@ -70,6 +64,12 @@ class Lobby:
             self.command_callback(player, message)
             return True
         return False
+
+    def send_message_to_player(self, player, message_json):
+        string_message = "$"
+        string_message += json.dumps(message_json)
+        string_message += "$"
+        player["connection"].sendall(bytes(string_message, 'UTF-8'))
 
     def make_client_command(self, player, message, values=""):
         command_json = copy.deepcopy(command_dict)

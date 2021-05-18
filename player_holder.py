@@ -95,15 +95,22 @@ class PlayerHolder:
                 continue
 
     def execute_command(self, player, received_command):
-        if received_command["message"] == "player_moved":
-            player_new_position = json.loads(received_command["values"])
-            self.player_dict[player_new_position["id"]]["player_info"]=player_new_position
-            self.broadcast_command(player, "update_player_position", json.dumps(player_new_position))
         if received_command["message"] == "break_connection":
             print("break_connection")
             self.remove(player)
             print("player removed: " + str(player["player_info"]["id"]))
             return True
+        if received_command["message"] == "player_moved":
+            player_new_position = json.loads(received_command["values"])
+            self.player_dict[player_new_position["id"]]["player_info"]=player_new_position
+            self.broadcast_command(player, "update_player_position", json.dumps(player_new_position))
+            return False
+        if received_command["message"] == "destroy_object":
+            self.broadcast_command(player, "destroy_object", received_command["values"])
+            return False
+        if received_command["message"] == "toggle_flashlight":
+            self.broadcast_command(player, "toggle_flashlight", received_command["values"])
+            return False
         return False
 
     def send_message_to_player(self, player, message_json):
