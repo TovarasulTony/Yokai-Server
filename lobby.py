@@ -39,7 +39,7 @@ class Lobby:
         string_message = "$"
         string_message += json.dumps(message_json)
         string_message += "$"
-        player["connection"].sendall(bytes(json.dumps(message_json), 'UTF-8'))
+        player["connection"].sendall(bytes(json.dumps(string_message), 'UTF-8'))
 
     def clientthread(self, player):
         terminate_thread_flag = False
