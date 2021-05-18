@@ -2,6 +2,7 @@ from _thread import *
 import copy
 import json
 from player_holder import PlayerHolder
+from clues import CluesHandler
 
 command_dict = {
   "command_type": "INVALID",
@@ -28,6 +29,7 @@ class PlayerHolder:
         self.player_dict = {}
         self.lobby_ref = lobby_ref
         self.id_count = -1
+        self.clue_handler = CluesHandler()
         #self.terminate_thread_flag = False
 
     def add_player(self, player):
