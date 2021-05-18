@@ -10,7 +10,7 @@ phantom_clues_dict = {
 
 class CluesHandler:
     def __init__(self):
-        self.current_phantom = random.choice(list(phantom_clues_dict.values()))
+        self.current_phantom = random.choice(list(phantom_clues_dict.items()))
         print(self.current_phantom)
 
     def add_player(self, player):
