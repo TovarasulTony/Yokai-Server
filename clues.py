@@ -26,15 +26,15 @@ class CluesHandler:
         self.clues_holder = self.set_clues_spawner()
 
     def set_clues_spawner(self):
-        clues_holder = {}
-        test = []
+        clues_holder = []
         discriminator = random.choice(list(group_clues_dict.keys()))
         for clue in group_clues_dict:
             if discriminator == clue:
                 continue
-            clues_holder[clue] = random.choice(group_clues_dict[clue])
-            test.append({10:16})
-        return test
+            item_dict["group_id"] = clue
+            item_dict["clue_id"] = random.choice(group_clues_dict[clue])
+            clues_holder.append(item_dict)
+        return clues_holder
 
     def get_phantom_type(self):
         return self.current_phantom
