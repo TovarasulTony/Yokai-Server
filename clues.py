@@ -33,7 +33,7 @@ class CluesHandler:
             if discriminator == clue:
                 continue
             clues_holder[clue] = random.choice(group_clues_dict[clue])
-            test.append(clue)
+            test.append({10,16})
         return test
 
     def get_phantom_type(self):
