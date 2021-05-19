@@ -42,8 +42,8 @@ class PlayerHolder:
         self.inform_lobby_players_number()
         self.make_client_command(added_player, "set_primordial_id", added_player["player_info"]["id"])
         self.send_init_info(added_player)
-        self.make_client_command(added_player, "set_clues_spawn", added_player["player_info"]["id"])
-        self.broadcast_command(added_player, "add_new_player", json.dumps(self.clue_handler.get_clues_holder()))
+        self.make_client_command(added_player, "set_clues_spawn", json.dumps(self.clue_handler.get_clues_holder()))
+        self.broadcast_command(added_player, "add_new_player", json.dumps(added_player["player_info"]))
         print("player added: " + str(added_player["player_info"]["id"]))
         start_new_thread(self.clientthread, (added_player,))
 
