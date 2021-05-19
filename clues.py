@@ -31,6 +31,11 @@ class CluesHandler:
         for clue in group_clues_dict:
             if discriminator == clue:
                 continue
+            clues_holder[clue] = random.choice(group_clues_dict[clue])
+        return clues_holder
 
     def get_phantom_type(self):
         return self.current_phantom
+
+    def get_clues_holder(self):
+        return self.clues_holder
