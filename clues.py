@@ -25,7 +25,7 @@ class CluesHandler:
         self.current_phantom = random.choice(list(phantom_clues_dict.keys()))
         self.clues_holder = self.set_clues_spawner()
 
-    def set_clues_spawner(self, player):
+    def set_clues_spawner(self):
         clues_holder = {}
         discriminator = random.choice(list(group_clues_dict.keys()))
         for clue in group_clues_dict:
