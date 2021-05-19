@@ -31,3 +31,6 @@ class CluesHandler:
         for clue in group_clues_dict:
             if discriminator == clue:
                 continue
+
+    def get_phantom_type(self):
+        return self.current_phantom
