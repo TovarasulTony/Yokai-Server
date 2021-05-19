@@ -31,6 +31,7 @@ class CluesHandler:
         for clue in group_clues_dict:
             if discriminator == clue:
                 continue
+            item_dict = {}
             item_dict["group_id"] = clue
             item_dict["clue_id"] = random.choice(group_clues_dict[clue])
             clues_holder.append(item_dict)
