@@ -23,7 +23,7 @@ group_clues_dict = {
 class CluesHandler:
     def __init__(self):
         self.current_phantom = random.choice(list(phantom_clues_dict.keys()))
-        self.clues_holder = set_clues_spawner()
+        self.clues_holder = self.set_clues_spawner()
 
     def set_clues_spawner(self, player):
         clues_holder = {}
