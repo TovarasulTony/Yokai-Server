@@ -1,6 +1,7 @@
 from _thread import *
 import copy
 import json
+from library import info_dict
 
 command_dict = {
   "command_type": "INVALID",
@@ -33,6 +34,7 @@ class Lobby:
 
     def setup_lobby_player(self, player):
         self.make_client_command(player, "game_count", self.game_players_count)
+        self.make_client_command(player, "server_version", info_dict["server_version"])
         self.broadcast_command(player, "lobby_count", len(self.lobby_list))
 
     def clientthread(self, player):
