@@ -37,13 +37,11 @@ class PlayerHolder:
         added_player["player_info"] = self.setup_player(player)
         added_player["connection"] = player["connection"]
         added_player["address"] = player["address"]
+        self.make_client_command(added_player, "set_phantom_type", self.clue_handler.get_phantom_type())
         self.player_dict[added_player["player_info"]["id"]] = added_player
         self.inform_lobby_players_number()
         self.make_client_command(added_player, "set_primordial_id", added_player["player_info"]["id"])
         self.send_init_info(added_player)
-        print(111)
-        print(self.clue_handler.get_phantom_type())
-        self.make_client_command(added_player, "set_phantom_type", self.clue_handler.get_phantom_type())
         self.broadcast_command(added_player, "add_new_player", json.dumps(added_player["player_info"]))
         print("player added: " + str(added_player["player_info"]["id"]))
         start_new_thread(self.clientthread, (added_player,))
