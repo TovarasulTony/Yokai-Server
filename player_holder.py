@@ -115,6 +115,10 @@ class PlayerHolder:
         if received_command["message"] == "toggle_flashlight":
             self.broadcast_command(player, "toggle_flashlight", received_command["values"])
             return False
+        if received_command["message"] == "test_command":
+            print(received_command["values"])
+            self.broadcast_command(player, "test_command", received_command["values"])
+            return False
         return False
 
     def send_message_to_player(self, player, message_json):
