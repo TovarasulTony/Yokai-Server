@@ -99,6 +99,7 @@ class PlayerHolder:
                 continue
 
     def execute_command(self, player, received_command):
+        print(1111)
         if received_command["message"] == "break_connection":
             print("break_connection")
             self.remove(player)
