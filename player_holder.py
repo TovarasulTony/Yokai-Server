@@ -102,8 +102,8 @@ class PlayerHolder:
     def execute_command(self, player, received_command):
         print(received_command["message"])
         if received_command["message"] == "test_command":
-            print(2222)
-            print(received_command["values"])
+            #print(2222)
+            #print(received_command["values"])
             self.broadcast_command(player, "test_command", received_command["values"])
             return False
         if received_command["message"] == "break_connection":
