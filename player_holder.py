@@ -80,7 +80,7 @@ class PlayerHolder:
                 if terminate_thread_flag == True:
                     print("Lobby Thread terminated for address: " + player["address"])
                     return
-                bytes_message = player["connection"].recv(12000)
+                bytes_message = player["connection"].recv(30000)
                 message_bulk = bytes_message.decode("utf-8")
                 #print(message_bulk)
                 message_list = message_bulk.split('$')
