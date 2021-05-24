@@ -75,17 +75,22 @@ class PlayerHolder:
 
     def clientthread(self, player):
         terminate_thread_flag = False
+        last_message = ""
         while True:
             try:
                 if terminate_thread_flag == True:
                     print("Lobby Thread terminated for address: " + player["address"])
                     return
                 bytes_message = player["connection"].recv(1024)
-                message_bulk = bytes_message.decode("utf-8")
-                #print(message_bulk)
-                print("$$$$$$$$$$$$$$$")
+                message_bulk = last_message
+                message_bulk += bytes_message.decode("utf-8")
                 print(message_bulk)
                 message_list = message_bulk.split('$')
+                if message_list[len(message_list) - 1] != "-" or message_list[len(message_list) - 1] != "--":
+                    last_message = message_list[len(message_list) - 1]
+                    message_list = message_list[:-1]
+                else:
+                    last_message = ""
                 for message in message_list:
                     print(message)
                     if message == "-" or message == "--":
