@@ -84,6 +84,7 @@ class PlayerHolder:
                 bytes_message = player["connection"].recv(1024)
                 message_bulk = last_message
                 message_bulk += bytes_message.decode("utf-8")
+                print("$$$$$$$$$$$$$$$")
                 print(message_bulk)
                 message_list = message_bulk.split('$')
                 if message_list[len(message_list) - 1] != "-" or message_list[len(message_list) - 1] != "--":
