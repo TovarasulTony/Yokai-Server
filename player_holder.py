@@ -99,6 +99,7 @@ class PlayerHolder:
                     if message == "":
                         print("Broken connection")
                         self.remove(player)
+                        terminate_thread_flag = True
                         return
                         """message may have no content if the connection  
                         is broken, in this case we remove the connection"""
