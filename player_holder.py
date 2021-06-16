@@ -69,6 +69,8 @@ class PlayerHolder:
         self.make_client_command(player, "set_primary_position", json.dumps(players_info_list))
 
     def remove(self, player):
+        player["terminate_player"] = True
+        print("player removed: " + str(player["player_info"]["id"]))
         if player["player_info"]["id"] in self.player_dict:
             self.player_dict.pop(player["player_info"]["id"])
         self.broadcast_command(player, "remove_player", player["player_info"]["id"])
@@ -84,8 +86,6 @@ class PlayerHolder:
                 bytes_message = player["connection"].recv(1024)
                 message_bulk = last_message
                 message_bulk += bytes_message.decode("utf-8")
-                #print("$$$$$$$$$$$$$$$")
-                #print(message_bulk)
                 message_list = message_bulk.split('$')
                 if message_list[len(message_list) - 1] != "-" or message_list[len(message_list) - 1] != "--":
                     last_message = message_list[len(message_list) - 1]
@@ -93,17 +93,11 @@ class PlayerHolder:
                 else:
                     last_message = ""
                 for message in message_list:
-                    #print(message)
                     if message == "-" or message == "--":
                         continue
                     if message == "":
                         print("Broken connection")
                         self.remove(player)
-                        player["terminate_player"] = True
-                        return
-                        """message may have no content if the connection  
-                        is broken, in this case we remove the connection"""
-                        continue
                     message = json.loads(message)
                     self.execute_command(player, message)
             except:  
@@ -115,8 +109,6 @@ class PlayerHolder:
         if received_command["message"] == "break_connection":
             print("break_connection")
             self.remove(player)
-            print("player removed: " + str(player["player_info"]["id"]))
-            player["terminate_player"] = True
         if received_command["message"] == "player_moved":
             player_new_position = json.loads(received_command["values"])
             self.player_dict[player_new_position["id"]]["player_info"]=player_new_position
