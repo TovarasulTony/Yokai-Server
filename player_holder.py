@@ -78,7 +78,7 @@ class PlayerHolder:
         last_message = ""
         while True:
             try:
-                if terminate_thread_flag == True:
+                if clientthread.terminate_thread_flag == True:
                     print("Lobby Thread terminated for address: " + player["address"])
                     return
                 bytes_message = player["connection"].recv(1024)
