@@ -80,7 +80,7 @@ class PlayerHolder:
     def clientthread(self, player):
         last_message = ""
         while True:
-            try:
+            #try:
                 if player["terminate_player"] == True:
                     print("Holder Thread terminated for address: " + player["address"])
                     return
@@ -101,8 +101,8 @@ class PlayerHolder:
                         self.remove(player)
                     message = json.loads(message)
                     self.execute_command(player, message)
-            except:  
-                continue
+            #except:  
+                #continue
 
     def execute_command(self, player, received_command):
         if received_command["message"] == "test_command":
