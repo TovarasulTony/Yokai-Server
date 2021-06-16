@@ -48,6 +48,7 @@ class Lobby:
                     if message == "-" or message == "--":
                         continue
                     if message == "":
+                        terminate_thread_flag = True
                         """message may have no content if the connection  
                         is broken, in this case we remove the connection"""
                         continue
