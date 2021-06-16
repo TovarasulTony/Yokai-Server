@@ -70,6 +70,7 @@ class PlayerHolder:
 
     def remove(self, player):
         player["terminate_player"] = True
+        print(player["terminate_player"])
         print("player removed: " + str(player["player_info"]["id"]))
         if player["player_info"]["id"] in self.player_dict:
             self.player_dict.pop(player["player_info"]["id"])
@@ -80,7 +81,6 @@ class PlayerHolder:
         last_message = ""
         while True:
             try:
-                print("ma-ta")
                 if player["terminate_player"] == True:
                     print("Holder Thread terminated for address: " + player["address"])
                     return
