@@ -73,7 +73,7 @@ class Lobby:
         print("$$$$$$")
         print(message["message"])
         if message["message"] == "enter_game":
-            #self.command_callback(player, message)
+            self.command_callback(player, message)
             return True
         if message["message"] == "break_connection":
             print("break_connection")
