@@ -20,7 +20,8 @@ player_position_json = {
 player_struct_dict = {
   "connection": None,
   "address": "",
-  "player_info": copy.deepcopy(player_position_json)
+  "player_info": copy.deepcopy(player_position_json),
+  "terminate_player": False
 }
 
 class PlayerHolder:
@@ -74,11 +75,10 @@ class PlayerHolder:
         self.inform_lobby_players_number()
 
     def clientthread(self, player):
-        terminate_thread_flag = False
         last_message = ""
         while True:
             try:
-                if clientthread.terminate_thread_flag == True:
+                if terminate_thread_flag == True:
                     print("Lobby Thread terminated for address: " + player["address"])
                     return
                 bytes_message = player["connection"].recv(1024)
@@ -99,40 +99,32 @@ class PlayerHolder:
                     if message == "":
                         print("Broken connection")
                         self.remove(player)
-                        terminate_thread_flag = True
+                        player["terminate_player"] = True
                         return
                         """message may have no content if the connection  
                         is broken, in this case we remove the connection"""
                         continue
                     message = json.loads(message)
-                    terminate_thread_flag = self.execute_command(player, message)
+                    self.execute_command(player, message)
             except:  
                 continue
 
     def execute_command(self, player, received_command):
-        #print(received_command["message"])
         if received_command["message"] == "test_command":
-            #print(2222)
-            #print(received_command["values"])
             self.broadcast_command(player, "test_command", received_command["values"])
-            return False
         if received_command["message"] == "break_connection":
             print("break_connection")
             self.remove(player)
             print("player removed: " + str(player["player_info"]["id"]))
-            return True
+            player["terminate_player"] = True
         if received_command["message"] == "player_moved":
             player_new_position = json.loads(received_command["values"])
             self.player_dict[player_new_position["id"]]["player_info"]=player_new_position
             self.broadcast_command(player, "update_player_position", json.dumps(player_new_position))
-            return False
         if received_command["message"] == "destroy_object":
             self.broadcast_command(player, "destroy_object", received_command["values"])
-            return False
         if received_command["message"] == "toggle_flashlight":
             self.broadcast_command(player, "toggle_flashlight", received_command["values"])
-            return False
-        return False
 
     def send_message_to_player(self, player, message_json):
         string_message = "$"
@@ -152,7 +144,6 @@ class PlayerHolder:
             player_in_list = self.player_dict[player_id]
             if player_in_list["player_info"]["id"] == player["player_info"]["id"]:
                 continue
-            #print("brodcast to: " + str(player_in_list["player_info"]["id"]))
             self.make_client_command(player_in_list, message, values)
 
     def inform_lobby_players_number(self):
