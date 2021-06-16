@@ -80,8 +80,9 @@ class PlayerHolder:
         last_message = ""
         while True:
             try:
+                print("ma-ta")
                 if player["terminate_player"] == True:
-                    print("Lobby Thread terminated for address: " + player["address"])
+                    print("Holder Thread terminated for address: " + player["address"])
                     return
                 bytes_message = player["connection"].recv(1024)
                 message_bulk = last_message
