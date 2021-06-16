@@ -39,28 +39,33 @@ class Lobby:
 
     def clientthread(self, player):
         terminate_thread_flag = False
+        last_message = ""
         while True:  
             try:
-                bytes_message = player["connection"].recv(2048)
-                message_bulk = bytes_message.decode("utf-8")
+                if terminate_thread_flag == True:
+                    print("Lobby Thread terminated for address: " + str(player["address"]))
+                    return
+                bytes_message = player["connection"].recv(1024)
+                message_bulk = last_message
+                message_bulk += bytes_message.decode("utf-8")
                 message_list = message_bulk.split('$')
+                if message_list[len(message_list) - 1] != "-" or message_list[len(message_list) - 1] != "--":
+                    last_message = message_list[len(message_list) - 1]
+                    message_list = message_list[:-1]
+                else:
+                    last_message = ""
                 for message in message_list:
                     if message == "-" or message == "--":
                         continue
                     if message == "":
-                        terminate_thread_flag = True
-                        """message may have no content if the connection  
-                        is broken, in this case we remove the connection"""
-                        continue
+                        print("Broken connection")
+                        self.remove_potential_player(player)
                     message = json.loads(message)
                     terminate_thread_flag = self.execute_command(player, message)
-                    if terminate_thread_flag == True:
-                        print("Lobby Thread terminated for address: " + str(player["address"]))
-                        return
-            except:
-                if terminate_thread_flag == True:
-                    return
-                continue
+            except: 
+                print("Exceptie in holder")
+                print("Lobby Thread terminated for address: " + str(player["address"]))
+                return
 
     def execute_command(self, player, message):
         if message["message"] == "enter_game":
