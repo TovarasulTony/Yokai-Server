@@ -60,6 +60,7 @@ class Lobby:
                     if message == "":
                         print("Broken connection")
                         self.remove_potential_player(player)
+                        terminate_thread_flag = True
                     message = json.loads(message)
                     terminate_thread_flag = self.execute_command(player, message)
             except: 
