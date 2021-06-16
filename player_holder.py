@@ -82,7 +82,7 @@ class PlayerHolder:
         while True:
             try:
                 if player["terminate_player"] == True:
-                    print("Holder Thread terminated for address: " + player["address"])
+                    print("Holder Thread terminated for address: " + str(player["address"]))
                     return
                 bytes_message = player["connection"].recv(1024)
                 message_bulk = last_message
