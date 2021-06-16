@@ -73,7 +73,7 @@ class Lobby:
         if message["message"] == "enter_game":
             self.command_callback(player, message)
             return True
-        if received_command["message"] == "break_connection":
+        if message["message"] == "break_connection":
             print("break_connection")
             self.remove_potential_player(player)
             return True
