@@ -103,7 +103,8 @@ class PlayerHolder:
                     self.execute_command(player, message)
             except: 
                 print("Exceptie in holder")
-                continue
+                print("Holder Thread terminated for address: " + player["address"])
+                return
 
     def execute_command(self, player, received_command):
         if received_command["message"] == "test_command":
