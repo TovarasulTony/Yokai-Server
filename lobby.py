@@ -83,7 +83,6 @@ class Lobby:
         string_message = "$"
         string_message += json.dumps(message_json)
         string_message += "$"
-        print(string_message)
         player["connection"].sendall(bytes(string_message, 'UTF-8'))
 
     def make_client_command(self, player, message, values=""):
